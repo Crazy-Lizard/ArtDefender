@@ -9,7 +9,7 @@ services:
         container_name: laravel_app
         restart: unless-stopped
         volumes:
-            - ./:/var/www/html
+            - ./:/var/www/html:rw,delegated
         networks:
             - laravel_network
         depends_on:
@@ -22,11 +22,11 @@ services:
         container_name: laravel_webserver
         restart: unless-stopped
         ports:
-            - "80:80"
+            - "8080:80"
             - "443:443"
         volumes:
-            - ./:/var/www/html
-            - ./docker/nginx:/etc/nginx/conf.d
+            - ./:/var/www/html:rw,delegated
+            - ./docker/nginx:/etc/nginx/conf.d:ro,delegated
         networks:
             - laravel_network
         depends_on:
@@ -40,9 +40,23 @@ services:
         environment:
             POSTGRES_DB: ArtDefenderDB
             POSTGRES_USER: user
-            POSTGRES_PASSWORD: masterkey
+            POSTGRES_PASSWORD: password
+        ports:
+            - "5433:5432"
         volumes:
             - db_data:/var/lib/postgresql/data
+        networks:
+            - laravel_network
+
+    pgadmin:
+        image: dpage/pgadmin4
+        container_name: db_interface
+        restart: unless-stopped
+        environment:
+            PGADMIN_DEFAULT_EMAIL: "zheka.kovylin.7791@gmail.com"
+            PGADMIN_DEFAULT_PASSWORD: "password"
+        ports:
+            - "5050:80"
         networks:
             - laravel_network
 
