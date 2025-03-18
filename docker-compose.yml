@@ -8,6 +8,8 @@ services:
             dockerfile: Dockerfile
         container_name: laravel_app
         restart: unless-stopped
+        # ports:
+        #     - "8080:80"
         volumes:
             - ./:/var/www/html:rw,delegated
         networks:
