@@ -16,8 +16,12 @@ Route::fallback(function () {
 
 Route::get('/map', [MapController::class, 'index'])->name('map');
 
-Route::get('/login', [UserController::class, 'login'])->name('login');
+// Route::get('/login', [UserController::class, 'login'])->name('login');
 // Route::post('/login/confirm', [UserController::class, 'login_confirm']);
 
-Route::get('/register', [UserController::class, 'register'])->name('register');
+// Route::get('/register', [UserController::class, 'register'])->name('register');
 // Route::post('/register/confirm', [UserController::class, 'register_confirm']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

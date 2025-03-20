@@ -42,3 +42,6 @@ RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod -R 775 /var/www/html/storage/framework/views
 RUN chown -R www-data:www-data /var/www/html/storage
 RUN chown -R www-data:www-data /var/www/html/storage/framework/views
+
+# Выполните миграции перед запуском основного приложения
+CMD php artisan migrate && php-fpm

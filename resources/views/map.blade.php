@@ -5,9 +5,17 @@
 @section('content')
     
   <div class="interface top-interface">
-    <a href="{{ route('welcome') }}" class="interface-btn left-btn">
-      <img src="{{ asset('icons/back.png') }}">
-    </a>
+    @guest
+      <a href="{{ route('welcome') }}" class="interface-btn left-btn">
+        <img src="{{ asset('icons/back.png') }}">
+      </a>
+    @endguest
+
+    @auth
+      <a href="{{ route('welcome') }}"{{--"{{ route('profile') }}"--}} class="interface-btn left-btn">
+        <img src="{{ asset('icons/user.png') }}">
+      </a>
+    @endauth
 
     <form id="ad-search" action="" method="GET" style="--i: 3">
       <div class="search-bar">
@@ -22,9 +30,11 @@
   
   </div>
 
+  @auth
     <a {{-- href="{{ route('route.name') }}" --}} class="bottom-interface">
       <img src="{{ asset('icons/plus.png') }}">
     </a>
+  @endauth
 
   <div id="map"></div>
 
