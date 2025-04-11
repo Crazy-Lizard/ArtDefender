@@ -7,32 +7,32 @@
   <div class="interface top-interface">
     @guest
       <a href="{{ route('welcome') }}" class="interface-btn left-btn">
-        <img src="{{ asset('icons/back.png') }}">
+        <img src="{{ asset('icons/black/back-black.png') }}">
       </a>
     @endguest
 
     @auth
-      <a href="{{ route('welcome') }}"{{--"{{ route('profile') }}"--}} class="interface-btn left-btn">
-        <img src="{{ asset('icons/user.png') }}">
+      <a href="{{ route('profile') }}" class="interface-btn left-btn">
+        <img src="{{ asset('icons/black/user-black.png') }}">
       </a>
     @endauth
 
     <form id="ad-search" action="" method="GET" style="--i: 3">
       <div class="search-bar">
         <input type="text" name="query" class="search" id="search" placeholder="Search">
-        <button class="search-btn" type="submit"><img src="icons/search.png"></button>
+        <button class="search-btn" type="submit"><img src="icons/black/search-black.png"></button>
       </div>
     </form>
 
     <a {{-- href="{{ route('route.name') }}" --}} class="interface-btn right-btn">
-      <img src="{{ asset('icons/filter.png') }}">
+      <img src="{{ asset('icons/black/filter-black.png') }}">
     </a>
   
   </div>
 
   @auth
     <a {{-- href="{{ route('route.name') }}" --}} class="bottom-interface">
-      <img src="{{ asset('icons/plus.png') }}">
+      <img src="{{ asset('icons/black/plus-black.png') }}">
     </a>
   @endauth
 

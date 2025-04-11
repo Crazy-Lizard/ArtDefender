@@ -5,7 +5,7 @@
 @section('content')
 
     <div class="content">
-        <img src="{{ asset('icons/logo.png') }}" alt="icon" id="logo">
+        <img src="{{ asset('icons/logo/logo.png') }}" alt="icon" id="logo">
         <div class="buttons">
             <button class="main-btn" onclick="window.location.href='{{ route('map') }}'">GO TO MAP</button>
             @guest

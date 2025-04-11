@@ -5,7 +5,7 @@
 @section('content')
 
     <a href="{{ route('welcome') }}" class="left-btn">
-        <img src="{{ asset('icons/backw.png') }}">
+        <img src="{{ asset('icons/white/back-white.png') }}">
     </a>
 
     <div class="content">
