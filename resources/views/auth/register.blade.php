@@ -4,9 +4,11 @@
 
 @section('content')
 
-    <a href="{{ route('welcome') }}" class="left-btn">
-        <img src="{{ asset('icons/white/back-white.png') }}">
-    </a>
+    <div class="header">
+        <a href="{{ route('welcome') }}" class="header-btn left-btn">
+            <img src="{{ asset('icons/white/back-white.png') }}">
+        </a>
+    </div>
 
     <div class="content">
         <form class="ad-form" method="POST" action="{{--/register/confirm--}}{{ route('register') }}" enctype="multipart/form-data"  style="--i: 0">

@@ -27,7 +27,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+Route::get('/profile/{id}', [ProfileController::class, 'index']);
 
 Route::group(['middleware' => ['auth']], function () {
     // Общие маршруты
