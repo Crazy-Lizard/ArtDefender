@@ -1,6 +1,6 @@
 @extends('layouts.main-layout')
 
-@section('title', 'ArtDefender')
+@section('title', 'ArtDefender : ' . (auth()->user()->name))
 
 @section('content')
 
@@ -21,9 +21,50 @@
         </a>
     </div>
 
+    <div class="slide-space">
+        <div class="points-comments">
+            
+            <div class="toggle">
+                <label>
+                    <div class="toggle-states">
+                        <input type="checkbox" class="double-toggle-checkbox">
+                        <span class="point-state">Points</span>
+                        <span class="comment-state">Comments</span>
+                        <div class="double-toggle-key"></div>
+                    </div>
+                </label>
+            </div>
+
+            <div class="content-list">
+                <div class="toggle">
+                    <div class="toggle-states">
+                        <span class="approve-state">YE</span>
+                        <span class="waiting-state">???</span>
+                        <span class="reject-state">NO</span>
+                        <button class="tripple-toggle-key approve-toggle"></button>
+                        <button class="tripple-toggle-key waiting-toggle" style="visibility: hidden"></button>
+                        <button class="tripple-toggle-key reject-toggle" style="visibility: hidden"></button>
+                        {{-- <label>
+                            <div class="toggle-states">
+                                <input type="checkbox" class="tripple-toggle-checkbox">
+                                <div class="tripple-toggle-key"></div>
+                            </div>
+                        </label> --}}
+                    </div>
+                </div>
+
+                <div></div>
+
+            </div>
+        </div>
+
+        <div class="notification-list"></div>
+    </div>
+
     @if(auth()->user()->isModerator())
-        <!-- Контент для модераторов -->
-        {{-- <a>ddfdfsdfsdfsdf</a> --}}
+        <div class="buttons">
+            <button class="moderator-btn main-btn" onclick="window.location.href='{{ route('moderate') }}'">Requests for moderation: </button>
+        </div>
     @endif
 
 @endsection

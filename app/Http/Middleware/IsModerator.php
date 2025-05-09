@@ -15,8 +15,11 @@ class IsModerator
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->user()->role !== 'moderator') {
-            abort(403);
+        // if (auth()->user()->role !== 'moderator') {
+        //     abort(403);
+        // }
+        if (!auth()->check() || auth()->user()->role !== 'moderator') {
+            return response()->json(['error' => 'Access Denied'], 403);
         }
         
         return $next($request);

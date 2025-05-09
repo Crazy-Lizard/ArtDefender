@@ -4,6 +4,7 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
+    user-select: none;
 }
 
 #map {
@@ -57,6 +58,15 @@ body {
 .bottom-interface img {
     height: 60px;
     width: 60px;
+}
+
+#confirmBtn {
+    height: 80px;
+    width: 80px;
+}
+#confirmBtn img {
+    height: 80px;
+    width: 80px;
 }
 
 .search-bar {

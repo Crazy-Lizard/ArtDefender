@@ -127,5 +127,6 @@ return [
         // Другие алиасы ...
         'Auth' => Illuminate\Support\Facades\Auth::class,
     ],
+    
 
 ];

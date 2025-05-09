@@ -31,9 +31,11 @@
   </div>
 
   @auth
-    <a {{-- href="{{ route('route.name') }}" --}} class="bottom-interface">
+    <a {{-- href="{{ route('route.name') }}" --}} class="bottom-interface" id="startBtn">
       <img src="{{ asset('icons/black/plus-black.png') }}">
     </a>
+
+    <a id="confirmBtn" class="bottom-interface" style="display: none;"><img src="{{ asset('icons/black/tick-black.png') }}"></a>
   @endauth
 
   <div id="map"></div>
@@ -54,6 +56,51 @@
         .bindPopup('{{ $location['name'] }}')
         .addTo(map);
     @endforeach
+
+    
+    let marker = null;
+    let isPlacing = false;
+    
+    // Активация режима размещения маркера
+    document.getElementById('startBtn').addEventListener('click', () => {
+        isPlacing = true;
+        document.getElementById('confirmBtn').style.display = 'block';
+        document.getElementById('startBtn').style.display = 'none';
+    });
+
+    // Обработка клика по карте
+    map.on('click', (e) => {
+        if (!isPlacing) return;
+        
+        if (marker) map.removeLayer(marker);
+        
+        marker = L.marker(e.latlng, {
+            draggable: true
+        }).addTo(map);
+    });
+
+    // Подтверждение координат
+    document.getElementById('confirmBtn').addEventListener('click', () => {
+        if (!marker) return;
+        
+        const lat = marker.getLatLng().lat.toFixed(7);
+        const lng = marker.getLatLng().lng.toFixed(7);
+        
+        // Отправка данных на сервер
+        fetch('/check-point', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                lat: lat,
+                lng: lng
+            })
+        }).then(response => {
+            window.location.href = response.url;
+        });
+    });
 
   </script>
 
