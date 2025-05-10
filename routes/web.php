@@ -31,12 +31,13 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 Route::get('/moderate', [ArtController::class, 'moderate'])->name('moderate');
+// Route::get('/moderate', [ArtController::class, 'moderate'])->name('moderate')->middleware(['auth', 'isModerator']);
 
-// Route::group(['middleware' => ['auth', 'role:moderator']], function () {
+// Route::group(['middleware' => ['auth', 'isModerator']], function () {
 //     Route::get('/moderate', [ArtController::class, 'moderate'])->name('moderate');
 // });
 
-// Route::middleware(['IsModerator'])->group(function () {
+// Route::middleware(['isModerator'])->group(function () {
 //     Route::get('/moderate', [ArtController::class, 'moderate'])->name('moderate');
 // });
 

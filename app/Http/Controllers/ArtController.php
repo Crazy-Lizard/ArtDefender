@@ -51,6 +51,9 @@ class ArtController extends Controller
     }
 
     public function moderate() {
+        if (!auth()->user()->IsModerator()) {
+            return redirect()->route('map');
+        }
         $arts = Art::where('request_status', 'waiting')->get();
         return view('moderate', ['arts' => $arts]);
     }

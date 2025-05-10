@@ -1,14 +1,13 @@
 @extends('layouts.main-layout')
 
-{{-- @section('title', 'ArtDefender : ' . (auth()->user()->name)) --}}
-@section('title', 'ArtDefender')
+@section('title', 'ArtDefender : Moderator panel')
 
 @section('content')
 
     <div class="moder-header">
-        {{-- <a href="/profile/{{ auth()->user()->id }}" class="header-btn left-btn">
+        <a href="/profile/{{ auth()->user()->id }}" class="header-btn left-btn">
             <img src="{{ asset('icons/white/back-white.png') }}">
-        </a> --}}
+        </a>
 
         <h1>MOdERATE THIS</h1>
     </div>
