@@ -101,7 +101,7 @@
             @if($approvedArts->isNotEmpty())
                 <div class="arts-grid">
                     @foreach($approvedArts as $art)
-                        <div class="art-item">
+                        <div class="card">
                             <a href="{{ route('art.show', $art->id) }}">
                                 <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
                             </a>
@@ -121,7 +121,7 @@
             @if($waitingArts->isNotEmpty())
                 <div class="arts-grid">
                     @foreach($waitingArts as $art)
-                        <div class="art-item">
+                        <div class="card">
                             <a href="{{ route('art.show', $art->id) }}">
                                 <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
                             </a>
@@ -141,7 +141,7 @@
             @if($rejectedArts->isNotEmpty())
                 <div class="arts-grid">
                     @foreach($rejectedArts as $art)
-                        <div class="art-item">
+                        <div class="card">
                             <a href="{{ route('art.show', $art->id) }}">
                                 <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
                             </a>
