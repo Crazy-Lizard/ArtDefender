@@ -9,9 +9,9 @@
             <img src="{{ asset('icons/white/back-white.png') }}">
         </a>
 
-        <h1>{{  }}</h1>
+        <h1></h1>
 
-        @if ($arts->user_id == auth()->user()->id)
+        @if ($art->user_id == auth()->user()->id)
             <a {{--href="{{ route('arts.delete') }}"--}} class="header-btn right-btn">
                 <img src="{{ asset('icons/red/trash-red.png') }}">
             </a>

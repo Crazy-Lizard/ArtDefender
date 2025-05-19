@@ -10,8 +10,8 @@ use App\Models\Art;
 class ArtController extends Controller
 {
     //
-    public function index() {
-        return view('art-screen');
+    public function index(Art $art) {
+        return view('arts.art-screen', ['art' => $art]);
     }
 
     public function create(Request $request)

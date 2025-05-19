@@ -20,8 +20,26 @@
             <img src="{{ asset('icons/red/logout-red.png') }}">
         </a>
     </div>
+    
+    <style>
+        .card {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 124px;
+            height: 124px;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .image {
+            /* max-width: 124px; */
+            max-height: 128px;
+            object-fit: cover;
+        }
+    </style>
 
-    <div class="slide-space">
+    {{-- <div class="slide-space">
         <div class="points-comments">
             
             <div class="toggle">
@@ -50,8 +68,8 @@
                                 <div class="tripple-toggle-key"></div>
                             </div>
                         </label> --}}
-                    </div>
-                </div>
+                    {{-- </div>
+                </div> --}}
 
                 {{-- <div>
                     @if ($arts->isEmpty())
@@ -71,10 +89,71 @@
                     @endif
                 </div> --}}
 
-            </div>
+            {{--</div>
         </div>
 
         <div class="notification-list"></div>
+    </div> --}}
+    <div class="art-status-blocks slide-space">
+        <!-- Approved Arts -->
+        <div class="status-block approved">
+            <h3>Approved Arts ({{ $approvedArts->count() }})</h3>
+            @if($approvedArts->isNotEmpty())
+                <div class="arts-grid">
+                    @foreach($approvedArts as $art)
+                        <div class="art-item">
+                            <a href="{{ route('art.show', $art->id) }}">
+                                <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
+                            </a>
+                            {{-- <img src="{{ $art->image_url }}" alt="Art image"> --}}
+                            {{-- <p>{{ $art->description }}</p> --}}
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <p class="no-arts">No approved arts</p>
+            @endif
+        </div>
+
+        <!-- Waiting Arts -->
+        <div class="status-block waiting">
+            <h3>Pending Arts ({{ $waitingArts->count() }})</h3>
+            @if($waitingArts->isNotEmpty())
+                <div class="arts-grid">
+                    @foreach($waitingArts as $art)
+                        <div class="art-item">
+                            <a href="{{ route('art.show', $art->id) }}">
+                                <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
+                            </a>
+                            {{-- <img src="{{ $art->image_url }}" alt="Art image"> --}}
+                            {{-- <p>{{ $art->description }}</p> --}}
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <p class="no-arts">No pending arts</p>
+            @endif
+        </div>
+
+        <!-- Rejected Arts -->
+        <div class="status-block rejected">
+            <h3>Rejected Arts ({{ $rejectedArts->count() }})</h3>
+            @if($rejectedArts->isNotEmpty())
+                <div class="arts-grid">
+                    @foreach($rejectedArts as $art)
+                        <div class="art-item">
+                            <a href="{{ route('art.show', $art->id) }}">
+                                <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
+                            </a>
+                            {{-- <img src="{{ $art->image_url }}" alt="Art image">
+                            <p>{{ $art->description }}</p> --}}
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <p class="no-arts">No rejected arts</p>
+            @endif
+        </div>
     </div>
 
     @if(auth()->user()->isModerator())

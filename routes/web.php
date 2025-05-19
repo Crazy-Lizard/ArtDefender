@@ -29,8 +29,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/arts/create', [ArtController::class, 'create'])->name('arts.create');
     Route::post('/arts/store', [ArtController::class, 'store'])->name('arts.store');
 
-    Route::get('/art/{id}', [ArtController::class, 'index']);
-
+    Route::get('/arts/{art}', [ArtController::class, 'index'])->name('art.show');
 
     Route::get('/requests', [ArtController::class, 'ShowRequests'])->name('requests');
     Route::get('/arts/{art}/moderate', [ArtController::class, 'artModerate'])->name('arts.moderate');

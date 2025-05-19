@@ -9,6 +9,8 @@ class Art extends Model
 {
     //
     protected $table = 'arts';
+
+    protected $appends = ['image_url'];
     
     protected $fillable = ['lat', 'lng', 'image_path', 'description', 'creator', 'user_id', 'art_status', 'request_status', 'art_type', 'art_created_year'];
 

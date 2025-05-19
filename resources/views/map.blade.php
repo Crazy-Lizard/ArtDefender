@@ -13,6 +13,7 @@
 
     @auth
       <a href="/profile/{{ auth()->user()->id }}" class="interface-btn left-btn">
+      {{-- <a href="{{ route('profile') }}" class="interface-btn left-btn"> --}}
         <img src="{{ asset('icons/black/user-black.png') }}">
       </a>
     @endauth

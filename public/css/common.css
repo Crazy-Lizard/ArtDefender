@@ -202,13 +202,14 @@ input::placeholder {
     border-radius: 35px;
     padding-left: 30px;
     text-align: start;
-    position: absolute;
+    position: fixed;
     bottom: 20px;
 }
 
 .slide-space {
     align-items: center;
     margin-top: 10px;
+    margin-bottom: 70px;
 }
 
 .toggle {
