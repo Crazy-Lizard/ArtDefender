@@ -10,6 +10,10 @@ use App\Models\Art;
 class ArtController extends Controller
 {
     //
+    public function index() {
+        return view('art-screen');
+    }
+
     public function create(Request $request)
     {
         return view('arts.create', [
@@ -50,11 +54,34 @@ class ArtController extends Controller
         return redirect()->route('map')->with('success', 'Art submitted successfully!');
     }
 
-    public function moderate() {
-        if (!auth()->user()->IsModerator()) {
+    public function showRequests() {
+        if (!auth()->user()->isModerator()) {
             return redirect()->route('map');
         }
         $arts = Art::where('request_status', 'waiting')->get();
-        return view('moderate', ['arts' => $arts]);
+        return view('requests', ['arts' => $arts]);
+    }
+
+    public function artModerate(Art $art) {
+        if (!auth()->user()->isModerator()) {
+            return redirect()->route('map');
+        }
+        return view('arts.moderate', ['art' => $art]);
+    }
+
+    public function artApprove(Art $art) {
+        if (!auth()->user()->isModerator()) {
+            return redirect()->route('map');
+        }
+        $art->update(['request_status' => 'approved']);
+        return redirect()->route('requests')->with('success', 'Art approved');
+    }
+
+    public function artReject(Art $art) {
+        if (!auth()->user()->isModerator()) {
+            return redirect()->route('map');
+        }
+        $art->update(['request_status' => 'rejected']);
+        return redirect()->route('requests')->with('success', 'Art rejected');
     }
 }

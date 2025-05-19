@@ -16,6 +16,11 @@ class Art extends Model
         return $this->belongsTo(Point::class, ['lat', 'lng']);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function getImageUrlAttribute()
     {
         return $this->image_path ? Storage::url($this->image_path) : null;

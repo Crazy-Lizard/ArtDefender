@@ -64,6 +64,56 @@ body {
     border-radius: 45px;
 }
 
+.moder-btns {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.moder-btn {
+    height: 65px;
+    width: 181px;
+    border: 0px;
+    border-radius: 33px;
+    font-size: 24px;
+    font-weight: bold;
+    color: whitesmoke;
+    transition: background-color 0.3s ease, box-shadow 0.1s ease;
+}
+
+.moder-btn:hover {
+    background: linear-gradient(
+        150deg,
+        #43e6b1 16.65%,
+        #cb3ef2 50.78%,
+        #702ace 84.58%
+    );
+}
+
+.moder-btn:active {
+    box-shadow: 5px 5px 20px rgba(154, 11, 237, 0.788),
+        -5px -5px 20px rgb(128, 255, 99);
+}
+
+.approve-btn {
+    background: linear-gradient(
+        150deg,
+        #71efc6 16.65%,
+        #43e6b1 50.78%,
+        #077752 84.58%
+    );
+}
+
+.reject-btn {
+    background: linear-gradient(
+        150deg,
+        #dbb961 16.65%,
+        #f2603e 50.78%,
+        #b92136 84.58%
+    );
+}
+
 .header {
     display: flex;
     width: 100%;

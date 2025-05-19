@@ -53,7 +53,23 @@
                     </div>
                 </div>
 
-                <div></div>
+                {{-- <div>
+                    @if ($arts->isEmpty())
+                        <div class="alert alert-info">No arts.</div>
+                    @else
+                        <div class="row">
+                            @foreach ($arts as $art)
+                                <div class="card">
+                                    @if ($art->image_url)
+                                        <a href="{{ route('arts.show', $art->id) }}">
+                                            <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
+                                        </a>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+                </div> --}}
 
             </div>
         </div>
@@ -63,7 +79,7 @@
 
     @if(auth()->user()->isModerator())
         <div class="buttons">
-            <button class="moderator-btn main-btn" onclick="window.location.href='{{ route('moderate') }}'">Requests for moderation: </button>
+            <button class="moderator-btn main-btn" onclick="window.location.href='{{ route('requests') }}'">Requests for moderation: </button>
         </div>
     @endif
 

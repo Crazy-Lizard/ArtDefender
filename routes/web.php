@@ -28,16 +28,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/check-point', [MapController::class, 'checkPoint'])->name('check-point');
     Route::get('/arts/create', [ArtController::class, 'create'])->name('arts.create');
     Route::post('/arts/store', [ArtController::class, 'store'])->name('arts.store');
+
+    Route::get('/art/{id}', [ArtController::class, 'index']);
+
+
+    Route::get('/requests', [ArtController::class, 'ShowRequests'])->name('requests');
+    Route::get('/arts/{art}/moderate', [ArtController::class, 'artModerate'])->name('arts.moderate');
+    Route::put('/arts/{art}/approve', [ArtController::class, 'artApprove'])->name('arts.approve');
+    Route::put('/arts/{art}/reject', [ArtController::class, 'artReject'])->name('arts.reject');
 });
-
-Route::get('/moderate', [ArtController::class, 'moderate'])->name('moderate');
-// Route::get('/moderate', [ArtController::class, 'moderate'])->name('moderate')->middleware(['auth', 'isModerator']);
-
-// Route::group(['middleware' => ['auth', 'isModerator']], function () {
-//     Route::get('/moderate', [ArtController::class, 'moderate'])->name('moderate');
-// });
-
-// Route::middleware(['isModerator'])->group(function () {
-//     Route::get('/moderate', [ArtController::class, 'moderate'])->name('moderate');
-// });
-
