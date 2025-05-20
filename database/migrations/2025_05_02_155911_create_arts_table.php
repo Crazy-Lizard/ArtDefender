@@ -24,6 +24,7 @@ return new class extends Migration
             $table->enum('art_type', ['street-art', 'mural', 'tag', 'sticker']);
             $table->integer('art_created_year')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign(['lat', 'lng'])->references(['lat', 'lng'])->on('points');
         });

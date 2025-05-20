@@ -200,8 +200,8 @@ input::placeholder {
     height: 65px;
     width: 342px;
     border-radius: 35px;
-    padding-left: 30px;
-    text-align: start;
+    /* padding-left: 30px; */
+    text-align: center;
     position: fixed;
     bottom: 20px;
 }

@@ -158,7 +158,7 @@
 
     @if(auth()->user()->isModerator())
         <div class="buttons">
-            <button class="moderator-btn main-btn" onclick="window.location.href='{{ route('requests') }}'">Requests for moderation: </button>
+            <button class="moderator-btn main-btn" onclick="window.location.href='{{ route('requests') }}'">Moderation board</button>
         </div>
     @endif
 

@@ -10,7 +10,15 @@ use App\Models\Art;
 class ArtController extends Controller
 {
     //
-    public function index(Art $art) {
+    public function show(Art $art) {
+        $currentUrl = url()->current();
+        $previousUrl = url()->previous();
+
+        // Store the previous URL if it's different from the current art URL
+        if ($previousUrl !== $currentUrl) {
+            session()->put('art_show_referrer', $previousUrl);
+        }
+
         return view('arts.art-screen', ['art' => $art]);
     }
 
@@ -83,5 +91,21 @@ class ArtController extends Controller
         }
         $art->update(['request_status' => 'rejected']);
         return redirect()->route('requests')->with('success', 'Art rejected');
+    }
+
+    public function destroy(Art $art)
+    {
+        // Проверка прав
+        if (($art->user_id !== auth()->id()) || (!auth()->user()->isModerator())) {
+            abort(403, 'Недостаточно прав');
+        }
+
+        // Удаление
+        $art->delete();
+
+        // Retrieve and remove the stored referrer, defaulting to the map route
+        $redirectUrl = session()->pull('art_show_referrer', route('map'));
+
+        return redirect()->to($redirectUrl);
     }
 }

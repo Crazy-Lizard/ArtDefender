@@ -30,7 +30,6 @@
         }
     </style>
 
-
     <div class="container">
         <div>
             <div class="card">
@@ -51,6 +50,7 @@
             </div>
         </div>
     </div>
+    
     <div class="moder-btns">
         <form method="POST" action="{{ route('arts.approve', $art->id) }}">
             @csrf

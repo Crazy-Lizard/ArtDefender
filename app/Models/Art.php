@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Art extends Model
 {
     //
+    use SoftDeletes;
+    
     protected $table = 'arts';
 
     protected $appends = ['image_url'];

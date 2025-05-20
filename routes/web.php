@@ -29,10 +29,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/arts/create', [ArtController::class, 'create'])->name('arts.create');
     Route::post('/arts/store', [ArtController::class, 'store'])->name('arts.store');
 
-    Route::get('/arts/{art}', [ArtController::class, 'index'])->name('art.show');
+    Route::get('/arts/{art}', [ArtController::class, 'show'])->name('art.show');
 
     Route::get('/requests', [ArtController::class, 'ShowRequests'])->name('requests');
     Route::get('/arts/{art}/moderate', [ArtController::class, 'artModerate'])->name('arts.moderate');
     Route::put('/arts/{art}/approve', [ArtController::class, 'artApprove'])->name('arts.approve');
     Route::put('/arts/{art}/reject', [ArtController::class, 'artReject'])->name('arts.reject');
+
+    Route::delete('/arts/{art}', [ArtController::class, 'destroy'])->name('arts.delete');
 });
