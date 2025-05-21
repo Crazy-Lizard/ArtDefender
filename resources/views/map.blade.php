@@ -53,9 +53,16 @@
 
     // Добавление маркеров из данных Laravel
     @foreach ($locations as $location)
-      L.marker([{{ $location['lat'] }}, {{ $location['lng'] }}])
-        .bindPopup('{{ $location['name'] }}')
-        .addTo(map);
+      (function() {
+        const marker = L.marker([{{ $location['lat'] }}, {{ $location['lng'] }}])
+          .bindPopup('{{ $location['name'] }}')
+          .addTo(map);
+        
+        // Обработчик клика для перехода на страницу арта
+        marker.on('click', function() {
+          window.location.href = "{{ route('art.show', $location['id']) }}";
+        });
+      })();
     @endforeach
 
     

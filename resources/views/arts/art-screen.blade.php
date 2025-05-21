@@ -8,38 +8,51 @@
         {{-- <a href="/profile/{{ auth()->user()->id }}" class="header-btn left-btn">
             <img src="{{ asset('icons/white/back-white.png') }}">
         </a> --}}
-        <a href="/profile/{{ auth()->user()->id }}" class="header-btn left-btn" onclick="event.preventDefault(); window.history.back();">
-            <img src="{{ asset('icons/white/back-white.png') }}">
-        </a>
+        @auth
+            <a href="/profile/{{ auth()->user()->id }}" class="header-btn left-btn" onclick="event.preventDefault(); window.history.back();">
+                <img src="{{ asset('icons/white/back-white.png') }}">
+            </a>
+        @endauth
+        @guest
+            <a class="header-btn left-btn" onclick="event.preventDefault(); window.history.back();">
+                <img src="{{ asset('icons/white/back-white.png') }}">
+            </a>
+        @endguest
 
         <h1>Art #{{ $art->id }}</h1>
 
-        @if (($art->user_id == auth()->user()->id) || (auth()->user()->isModerator()))
-            {{-- <a href="{{ route('arts.delete') }}" class="header-btn right-btn">
-                <img src="{{ asset('icons/red/trash-red.png') }}">
-            </a> --}}
+        @auth
+            @if (($art->user_id == auth()->user()->id) || (auth()->user()->isModerator()))
+                {{-- <a href="{{ route('arts.delete') }}" class="header-btn right-btn">
+                    <img src="{{ asset('icons/red/trash-red.png') }}">
+                </a> --}}
 
 
-            <a href="#" class="header-btn right-btn" 
-                onclick="event.preventDefault();
-                        if(confirm('Удалить этот арт?')) {
-                            document.getElementById('delete-form-{{ $art->id }}').submit();
-                        }">
-                <img src="{{ asset('icons/red/trash-red.png') }}">
+                <a href="#" class="header-btn right-btn" 
+                    onclick="event.preventDefault();
+                            if(confirm('Удалить этот арт?')) {
+                                document.getElementById('delete-form-{{ $art->id }}').submit();
+                            }">
+                    <img src="{{ asset('icons/red/trash-red.png') }}">
+                </a>
+                <form id="delete-form-{{ $art->id }}" 
+                    action="{{ route('arts.delete', $art->id) }}" 
+                    method="POST" 
+                    style="display: none;">
+                    @csrf
+                    @method('DELETE')
+                </form>
+
+            @else
+                <a {{--href="{{ route('report.create') }}"--}} class="header-btn right-btn">
+                    <img src="{{ asset('icons/red/report-red.png') }}">
+                </a>
+            @endif
+        @endauth
+        @guest
+            <a {{--href="{{ route('report.create') }}"--}} class="header-btn right-btn" style="cursor:default">
             </a>
-            <form id="delete-form-{{ $art->id }}" 
-                action="{{ route('arts.delete', $art->id) }}" 
-                method="POST" 
-                style="display: none;">
-                @csrf
-                @method('DELETE')
-            </form>
-
-        @else
-            <a {{--href="{{ route('report.create') }}"--}} class="header-btn right-btn">
-                <img src="{{ asset('icons/red/trash-red.png') }}">
-            </a>
-        @endif
+        @endguest
     </div>
 
     <style>

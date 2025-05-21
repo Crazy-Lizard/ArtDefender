@@ -6,28 +6,28 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Point;
+use App\Models\Art;
 
 class MapController extends Controller
 {
     //
     public function index()
     {
-        // Пример данных (можно заменить на данные из БД)
-        $locations = [
-            [
-                'name' => 'Центр города',
-                'lat' => 44.6167,
-                'lng' => 33.5254,
-            ],
-            // [
-            //     'name' => 'Парк',
-            //     'lat' => 55.7622,
-            //     'lng' => 37.6155,
-            // ],
-        ];
+        $approvedArts = Art::where('request_status', 'approved')->get();
+        
+        // Формируем массив локаций для карты
+        $locations = $approvedArts->map(function ($art) {
+            return [
+                'id' => $art->id,
+                'name' => $art->creator 
+                    ? "{$art->art_type} by {$art->creator}" 
+                    : ucfirst(str_replace('-', ' ', $art->art_type)),
+                'lat' => $art->lat,
+                'lng' => $art->lng,
+            ];
+        })->toArray();
 
         return view('map', compact('locations'));
-        // return view('map');
     }
     
     public function checkPoint(Request $request)

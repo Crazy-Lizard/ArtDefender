@@ -115,45 +115,47 @@
             @endif
         </div>
 
-        <!-- Waiting Arts -->
-        <div class="status-block waiting">
-            <h3>Pending Arts ({{ $waitingArts->count() }})</h3>
-            @if($waitingArts->isNotEmpty())
-                <div class="arts-grid">
-                    @foreach($waitingArts as $art)
-                        <div class="card">
-                            <a href="{{ route('art.show', $art->id) }}">
-                                <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
-                            </a>
-                            {{-- <img src="{{ $art->image_url }}" alt="Art image"> --}}
-                            {{-- <p>{{ $art->description }}</p> --}}
-                        </div>
-                    @endforeach
-                </div>
-            @else
-                <p class="no-arts">No pending arts</p>
-            @endif
-        </div>
+        @if ($art->user_id == auth()->user()->id)
+            <!-- Waiting Arts -->
+            <div class="status-block waiting">
+                <h3>Pending Arts ({{ $waitingArts->count() }})</h3>
+                @if($waitingArts->isNotEmpty())
+                    <div class="arts-grid">
+                        @foreach($waitingArts as $art)
+                            <div class="card">
+                                <a href="{{ route('art.show', $art->id) }}">
+                                    <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
+                                </a>
+                                {{-- <img src="{{ $art->image_url }}" alt="Art image"> --}}
+                                {{-- <p>{{ $art->description }}</p> --}}
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <p class="no-arts">No pending arts</p>
+                @endif
+            </div>
 
-        <!-- Rejected Arts -->
-        <div class="status-block rejected">
-            <h3>Rejected Arts ({{ $rejectedArts->count() }})</h3>
-            @if($rejectedArts->isNotEmpty())
-                <div class="arts-grid">
-                    @foreach($rejectedArts as $art)
-                        <div class="card">
-                            <a href="{{ route('art.show', $art->id) }}">
-                                <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
-                            </a>
-                            {{-- <img src="{{ $art->image_url }}" alt="Art image">
-                            <p>{{ $art->description }}</p> --}}
-                        </div>
-                    @endforeach
-                </div>
-            @else
-                <p class="no-arts">No rejected arts</p>
-            @endif
-        </div>
+            <!-- Rejected Arts -->
+            <div class="status-block rejected">
+                <h3>Rejected Arts ({{ $rejectedArts->count() }})</h3>
+                @if($rejectedArts->isNotEmpty())
+                    <div class="arts-grid">
+                        @foreach($rejectedArts as $art)
+                            <div class="card">
+                                <a href="{{ route('art.show', $art->id) }}">
+                                    <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
+                                </a>
+                                {{-- <img src="{{ $art->image_url }}" alt="Art image">
+                                <p>{{ $art->description }}</p> --}}
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <p class="no-arts">No rejected arts</p>
+                @endif
+            </div>
+        @endif
     </div>
 
     @if(auth()->user()->isModerator())

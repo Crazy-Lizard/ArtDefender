@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Art; 
+use App\Models\Art;
 
 class ArtController extends Controller
 {

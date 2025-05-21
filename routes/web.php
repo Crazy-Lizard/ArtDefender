@@ -17,19 +17,19 @@ Route::fallback(function () {
 
 Route::get('/map', [MapController::class, 'index'])->name('map');
 
+Route::get('/arts/{art}', [ArtController::class, 'show'])->name('art.show');
+
+Route::get('/profile/{id}', [ProfileController::class, 'index']);
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => ['auth']], function () {
     // Общие маршруты
-    Route::get('/profile/{id}', [ProfileController::class, 'index']);
-
     Route::post('/check-point', [MapController::class, 'checkPoint'])->name('check-point');
     Route::get('/arts/create', [ArtController::class, 'create'])->name('arts.create');
     Route::post('/arts/store', [ArtController::class, 'store'])->name('arts.store');
-
-    Route::get('/arts/{art}', [ArtController::class, 'show'])->name('art.show');
 
     Route::get('/requests', [ArtController::class, 'ShowRequests'])->name('requests');
     Route::get('/arts/{art}/moderate', [ArtController::class, 'artModerate'])->name('arts.moderate');
