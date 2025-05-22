@@ -9,7 +9,10 @@
             <img src="{{ asset('icons/white/back-white.png') }}">
         </a>
 
-        <h1>Moderate Art #{{ $art->id }}</h1>
+        <h1>
+            Moderate Art #{{ $art->id }} by 
+            <a href="/profile/{{ $art->user_id }}" style="color: whitesmoke">{{ $art->user->name }}</a>
+        </h1>
     </div>
 
     <style>

@@ -19,7 +19,10 @@
             </a>
         @endguest
 
-        <h1>Art #{{ $art->id }}</h1>
+        <h1>
+            Art #{{ $art->id }} by 
+            <a href="/profile/{{ $art->user_id }}" style="color: whitesmoke">{{ $art->user->name }}</a>
+        </h1>
 
         @auth
             @if (($art->user_id == auth()->user()->id) || (auth()->user()->isModerator()))

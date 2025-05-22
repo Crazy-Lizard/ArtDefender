@@ -1,6 +1,6 @@
 @extends('layouts.main-layout')
 
-@section('title', 'ArtDefender : ' . (auth()->user()->name))
+@section('title', 'ArtDefender : ' . ($user->name))
 
 @section('content')
 
@@ -10,15 +10,24 @@
         </a>
 
         <h1> 
-            {{ auth()->user()->name }}
+            {{ $user->name }}
         </h1>
         
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
-        <a class="header-btn right-btn" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-            <img src="{{ asset('icons/red/logout-red.png') }}">
-        </a>
+        @auth
+            @if(auth()->user()->id == $user->id)
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+                <a class="header-btn right-btn" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <img src="{{ asset('icons/red/logout-red.png') }}">
+                </a>
+            @else
+            <a class="header-btn right-btn" style="cursor:default"></a>
+            @endif
+        @endauth
+        @guest
+            <a class="header-btn right-btn" style="cursor:default"></a>
+        @endguest
     </div>
     
     <style>
@@ -49,7 +58,7 @@
             </div>
         </label>
     </div>--}}
-    
+
     <div class="art-status-blocks slide-space">
         <!-- Approved Arts -->
         <div class="status-block approved">
@@ -69,50 +78,54 @@
             @endif
         </div>
 
-        {{-- @if ($art->user_id == auth()->user()->id) --}}
-        @if (auth()->user()->id == $user->id)
-            <!-- Waiting Arts -->
-            <div class="status-block waiting">
-                <h3>Pending Arts ({{ $waitingArts->count() }})</h3>
-                @if($waitingArts->isNotEmpty())
-                    <div class="arts-grid">
-                        @foreach($waitingArts as $art)
-                            <div class="card">
-                                <a href="{{ route('art.show', $art->id) }}">
-                                    <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
-                                </a>
-                            </div>
-                        @endforeach
-                    </div>
-                @else
-                    <p class="no-arts">No pending arts</p>
-                @endif
-            </div>
+        @auth
+            {{-- @if ($art->user_id == auth()->user()->id) --}}
+            @if (auth()->user()->id == $user->id)
+                <!-- Waiting Arts -->
+                <div class="status-block waiting">
+                    <h3>Pending Arts ({{ $waitingArts->count() }})</h3>
+                    @if($waitingArts->isNotEmpty())
+                        <div class="arts-grid">
+                            @foreach($waitingArts as $art)
+                                <div class="card">
+                                    <a href="{{ route('art.show', $art->id) }}">
+                                        <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <p class="no-arts">No pending arts</p>
+                    @endif
+                </div>
 
-            <!-- Rejected Arts -->
-            <div class="status-block rejected">
-                <h3>Rejected Arts ({{ $rejectedArts->count() }})</h3>
-                @if($rejectedArts->isNotEmpty())
-                    <div class="arts-grid">
-                        @foreach($rejectedArts as $art)
-                            <div class="card">
-                                <a href="{{ route('art.show', $art->id) }}">
-                                    <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
-                                </a>
-                            </div>
-                        @endforeach
-                    </div>
-                @else
-                    <p class="no-arts">No rejected arts</p>
-                @endif
-            </div>
-        @endif
+                <!-- Rejected Arts -->
+                <div class="status-block rejected">
+                    <h3>Rejected Arts ({{ $rejectedArts->count() }})</h3>
+                    @if($rejectedArts->isNotEmpty())
+                        <div class="arts-grid">
+                            @foreach($rejectedArts as $art)
+                                <div class="card">
+                                    <a href="{{ route('art.show', $art->id) }}">
+                                        <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <p class="no-arts">No rejected arts</p>
+                    @endif
+                </div>
+            @endif
+        @endauth
     </div>
 
-    @if(auth()->user()->isModerator())
-        <div class="buttons">
-            <button class="moderator-btn main-btn" onclick="window.location.href='{{ route('requests') }}'">Moderation board</button>
-        </div>
-    @endif
+    @auth
+        @if(auth()->user()->isModerator())
+            <div class="buttons">
+                <button class="moderator-btn main-btn" onclick="window.location.href='{{ route('requests') }}'">Moderation board</button>
+            </div>
+        @endif
+    @endauth
 
 @endsection
