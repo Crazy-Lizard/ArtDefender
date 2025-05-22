@@ -32,9 +32,7 @@
   </div>
 
   @auth
-    <a {{-- href="{{ route('route.name') }}" --}} class="bottom-interface" id="startBtn">
-      <img src="{{ asset('icons/black/plus-black.png') }}">
-    </a>
+    <a class="bottom-interface" id="startBtn"><img src="{{ asset('icons/black/plus-black.png') }}"></a>
 
     <a id="confirmBtn" class="bottom-interface" style="display: none;"><img src="{{ asset('icons/black/tick-black.png') }}"></a>
   @endauth

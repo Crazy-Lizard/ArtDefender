@@ -40,7 +40,7 @@ class ArtController extends Controller
             'description' => 'nullable|string|max:1000',
             'creator' => 'nullable|string|max:255',
             'art_type' => 'required|in:street-art,mural,tag,sticker',
-            'art_status' => 'required|in:live,buffed,unknown',
+            'art_status' => 'required|in:LIVE,BUFFED,UNKNOWN',
             'art_created_year' => 'nullable|integer|min:1900|max:'.date('Y'),
         ]);
 
@@ -52,7 +52,7 @@ class ArtController extends Controller
             'lng' => $validated['lng'],
             'image_path' => $imagePath,
             'description' => $validated['description'],
-            'creator' => $validated['creator'],
+            'creator' => $validated['creator'] ?? 'UNKNOWN',
             'art_type' => $validated['art_type'],
             'art_status' => $validated['art_status'],
             'art_created_year' => $validated['art_created_year'],

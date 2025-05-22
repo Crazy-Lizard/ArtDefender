@@ -17,8 +17,6 @@ Route::fallback(function () {
 
 Route::get('/map', [MapController::class, 'index'])->name('map');
 
-Route::get('/arts/{art}', [ArtController::class, 'show'])->name('art.show');
-
 Route::get('/profile/{id}', [ProfileController::class, 'index']);
 
 Auth::routes();
@@ -38,3 +36,5 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::delete('/arts/{art}', [ArtController::class, 'destroy'])->name('arts.delete');
 });
+
+Route::get('/arts/{art}', [ArtController::class, 'show'])->name('art.show');

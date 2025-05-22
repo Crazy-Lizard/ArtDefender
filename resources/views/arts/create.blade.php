@@ -23,9 +23,9 @@
                 <div class="input-block">
                     <select class="form-control" name="art_status" required>
                         <option value="">Status of creation</option>
-                        <option value="live">Live</option>
-                        <option value="buffed">Buffed</option>
-                        <option value="unknown">Unknown</option>
+                        <option value="LIVE">Live</option>
+                        <option value="BUFFED">Buffed</option>
+                        <option value="UNKNOWN">Unknown</option>
                     </select>
 
                     @error('art_status')
@@ -48,7 +48,7 @@
                 </div>
                 <div class="input-block">
                     <select class="form-control" name="art_type" required>
-                        <option value="street-art">Type of creation</option>
+                        <option value="">Type of creation</option>
                         <option value="street-art">Street Art</option>
                         <option value="mural">Mural</option>
                         <option value="tag">Tag</option>

@@ -115,7 +115,8 @@
             @endif
         </div>
 
-        @if ($art->user_id == auth()->user()->id)
+        {{-- @if ($art->user_id == auth()->user()->id) --}}
+        @if (auth()->user()->id == $user->id)
             <!-- Waiting Arts -->
             <div class="status-block waiting">
                 <h3>Pending Arts ({{ $waitingArts->count() }})</h3>
