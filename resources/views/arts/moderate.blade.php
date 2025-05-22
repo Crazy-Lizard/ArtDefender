@@ -34,9 +34,7 @@
         <div>
             <div class="card">
                 @if ($art->image_url)
-                    {{-- <a href="{{ route('arts.moderate', $art->id) }}"> --}}
-                        <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
-                    {{-- </a> --}}
+                    <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
                 @endif
             </div>
             <div class="card-body">
@@ -57,8 +55,6 @@
             @method('PUT')
             <button type="submit" class="moder-btn approve-btn">Approve</button>
         </form>
-        {{-- <button class="moder-btn approve-btn">Approve</button>
-        <button class="moder-btn reject-btn">Reject</button> --}}
         <form method="POST" action="{{ route('arts.reject', $art->id) }}">
             @csrf
             @method('PUT')

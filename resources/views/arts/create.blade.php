@@ -14,7 +14,6 @@
                 <!-- Другие поля формы -->
                 <div class="input-block">
                     <input type="file" class="form-control-file" name="image" required accept="image/*">
-                    {{-- <input type="file" name="image" id="image" required> --}}
                     
                     @error('image')
                         <p class="error-text">{{ $message }}</p>

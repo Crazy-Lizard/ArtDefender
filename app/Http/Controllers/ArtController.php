@@ -35,7 +35,6 @@ class ArtController extends Controller
         $validated = $request->validate([
             'lat' => 'required|numeric|between:-90,90',
             'lng' => 'required|numeric|between:-180,180',
-            // 'image_path' => 'required|string|max:255', 
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'description' => 'nullable|string|max:1000',
             'creator' => 'nullable|string|max:255',
@@ -95,15 +94,12 @@ class ArtController extends Controller
 
     public function destroy(Art $art)
     {
-        // Проверка прав
         if (($art->user_id !== auth()->id()) || (!auth()->user()->isModerator())) {
             abort(403, 'Недостаточно прав');
         }
 
-        // Удаление
         $art->delete();
 
-        // Retrieve and remove the stored referrer, defaulting to the map route
         $redirectUrl = session()->pull('art_show_referrer', route('map'));
 
         return redirect()->to($redirectUrl);

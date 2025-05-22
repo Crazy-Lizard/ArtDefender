@@ -39,61 +39,17 @@
         }
     </style>
 
-    {{-- <div class="slide-space">
-        <div class="points-comments">
-            
-            <div class="toggle">
-                <label>
-                    <div class="toggle-states">
-                        <input type="checkbox" class="double-toggle-checkbox">
-                        <span class="point-state">Points</span>
-                        <span class="comment-state">Comments</span>
-                        <div class="double-toggle-key"></div>
-                    </div>
-                </label>
+    {{--<div class="toggle">
+        <label>
+            <div class="toggle-states">
+                <input type="checkbox" class="double-toggle-checkbox">
+                <span class="point-state">Points</span>
+                <span class="comment-state">Comments</span>
+                <div class="double-toggle-key"></div>
             </div>
-
-            <div class="content-list">
-                <div class="toggle">
-                    <div class="toggle-states">
-                        <span class="approve-state">YE</span>
-                        <span class="waiting-state">???</span>
-                        <span class="reject-state">NO</span>
-                        <button class="tripple-toggle-key approve-toggle"></button>
-                        <button class="tripple-toggle-key waiting-toggle" style="visibility: hidden"></button>
-                        <button class="tripple-toggle-key reject-toggle" style="visibility: hidden"></button>
-                        {{-- <label>
-                            <div class="toggle-states">
-                                <input type="checkbox" class="tripple-toggle-checkbox">
-                                <div class="tripple-toggle-key"></div>
-                            </div>
-                        </label> --}}
-                    {{-- </div>
-                </div> --}}
-
-                {{-- <div>
-                    @if ($arts->isEmpty())
-                        <div class="alert alert-info">No arts.</div>
-                    @else
-                        <div class="row">
-                            @foreach ($arts as $art)
-                                <div class="card">
-                                    @if ($art->image_url)
-                                        <a href="{{ route('arts.show', $art->id) }}">
-                                            <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
-                                        </a>
-                                    @endif
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
-                </div> --}}
-
-            {{--</div>
-        </div>
-
-        <div class="notification-list"></div>
-    </div> --}}
+        </label>
+    </div>--}}
+    
     <div class="art-status-blocks slide-space">
         <!-- Approved Arts -->
         <div class="status-block approved">
@@ -105,8 +61,6 @@
                             <a href="{{ route('art.show', $art->id) }}">
                                 <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
                             </a>
-                            {{-- <img src="{{ $art->image_url }}" alt="Art image"> --}}
-                            {{-- <p>{{ $art->description }}</p> --}}
                         </div>
                     @endforeach
                 </div>
@@ -127,8 +81,6 @@
                                 <a href="{{ route('art.show', $art->id) }}">
                                     <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
                                 </a>
-                                {{-- <img src="{{ $art->image_url }}" alt="Art image"> --}}
-                                {{-- <p>{{ $art->description }}</p> --}}
                             </div>
                         @endforeach
                     </div>
@@ -147,8 +99,6 @@
                                 <a href="{{ route('art.show', $art->id) }}">
                                     <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
                                 </a>
-                                {{-- <img src="{{ $art->image_url }}" alt="Art image">
-                                <p>{{ $art->description }}</p> --}}
                             </div>
                         @endforeach
                     </div>

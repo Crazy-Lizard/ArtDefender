@@ -13,7 +13,6 @@ class ProfileController extends Controller
 {
     //
     public function index($id) {
-        // return view('profile');
         $user = User::findOrFail($id);
         
         $approvedArts = $user->arts()

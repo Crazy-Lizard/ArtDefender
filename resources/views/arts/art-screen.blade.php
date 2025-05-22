@@ -23,11 +23,6 @@
 
         @auth
             @if (($art->user_id == auth()->user()->id) || (auth()->user()->isModerator()))
-                {{-- <a href="{{ route('arts.delete') }}" class="header-btn right-btn">
-                    <img src="{{ asset('icons/red/trash-red.png') }}">
-                </a> --}}
-
-
                 <a href="#" class="header-btn right-btn" 
                     onclick="event.preventDefault();
                             if(confirm('Удалить этот арт?')) {
@@ -50,8 +45,7 @@
             @endif
         @endauth
         @guest
-            <a {{--href="{{ route('report.create') }}"--}} class="header-btn right-btn" style="cursor:default">
-            </a>
+            <a class="header-btn right-btn" style="cursor:default"></a>
         @endguest
     </div>
 
@@ -77,9 +71,7 @@
         <div>
             <div class="card">
                 @if ($art->image_url)
-                    {{-- <a href="{{ route('arts.moderate', $art->id) }}"> --}}
-                        <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
-                    {{-- </a> --}}
+                    <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
                 @endif
             </div>
             <div class="card-body">
