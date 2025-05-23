@@ -41,21 +41,23 @@
                             <a href="{{ route('arts.moderate', $art->id) }}">
                                 <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
                             </a>
-                            {{-- !!!!!!!!!!!!!!!!!!!! --}}
-                            <div class="moder-btns">
-                                <form method="POST" action="{{ route('arts.approve', $art->id) }}">
-                                    @csrf
-                                    @method('PUT')
-                                    <button type="submit" class="moder-btn approve-btn">Approve</button>
-                                </form>
-                                <form method="POST" action="{{ route('arts.reject', $art->id) }}">
-                                    @csrf
-                                    @method('PUT')
-                                    <button type="submit" class="moder-btn reject-btn">Reject</button>
-                                </form>
-                            </div>
-                            {{-- !!!!!!!!!!!!!!!!!!!!! --}}
                         @endif
+                    </div>
+                    <div class="moder-btns-mini">
+                        <form method="POST" action="{{ route('arts.approve', $art->id) }}">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="moder-btn-mini approve-btn">
+                                <img src="{{ asset('icons/white/done-white.png') }}">
+                            </button>
+                        </form>
+                        <form method="POST" action="{{ route('arts.reject', $art->id) }}">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="moder-btn-mini reject-btn">
+                                <img src="{{ asset('icons/white/cross-white.png') }}">
+                            </button>
+                        </form>
                     </div>
                 @endforeach
             </div>
