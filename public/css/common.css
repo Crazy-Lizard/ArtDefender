@@ -86,6 +86,14 @@ body {
     font-weight: bold;
     color: whitesmoke;
     transition: background-color 0.3s ease, box-shadow 0.1s ease;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+}
+.moder-btn img {
+    height: 30px;
 }
 .moder-btn-mini {
     height: 60px;
@@ -95,6 +103,8 @@ body {
     display: grid;
     align-items: center;
     justify-content: center;
+    transition: background-color 0.3s ease, box-shadow 0.1s ease;
+    cursor: pointer;
 }
 .moder-btn-mini img {
     height: 40px;
@@ -108,8 +118,20 @@ body {
         #702ace 84.58%
     );
 }
+.moder-btn-mini:hover {
+    background: linear-gradient(
+        150deg,
+        #43e6b1 16.65%,
+        #cb3ef2 50.78%,
+        #702ace 84.58%
+    );
+}
 
 .moder-btn:active {
+    box-shadow: 5px 5px 20px rgba(154, 11, 237, 0.788),
+        -5px -5px 20px rgb(128, 255, 99);
+}
+.moder-btn-mini:active {
     box-shadow: 5px 5px 20px rgba(154, 11, 237, 0.788),
         -5px -5px 20px rgb(128, 255, 99);
 }

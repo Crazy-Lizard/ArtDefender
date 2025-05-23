@@ -56,12 +56,18 @@
         <form method="POST" action="{{ route('arts.approve', $art->id) }}">
             @csrf
             @method('PUT')
-            <button type="submit" class="moder-btn approve-btn">Approve</button>
+            <button type="submit" class="moder-btn approve-btn">
+                Approve
+                <img src="{{ asset('icons/white/done-white.png') }}">
+            </button>
         </form>
         <form method="POST" action="{{ route('arts.reject', $art->id) }}">
             @csrf
             @method('PUT')
-            <button type="submit" class="moder-btn reject-btn">Reject</button>
+            <button type="submit" class="moder-btn reject-btn">
+                Reject
+                <img src="{{ asset('icons/white/cross-white.png') }}">
+            </button>
         </form>
     </div>
 @endsection
