@@ -19,9 +19,12 @@ class MapController extends Controller
         $locations = $approvedArts->map(function ($art) {
             return [
                 'id' => $art->id,
+                'image_url' => $art->image_path,
                 'name' => $art->creator 
                     ? "{$art->art_type} by {$art->creator}" 
                     : ucfirst(str_replace('-', ' ', $art->art_type)),
+                'year' => $art->art_created_year,
+                'description' => $art->description,
                 'lat' => $art->lat,
                 'lng' => $art->lng,
             ];
