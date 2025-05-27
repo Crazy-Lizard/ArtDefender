@@ -4,8 +4,8 @@
 
 @section('content')
 
-    <div class="moder-header">
-        <a href='{{ route('requests') }}' class="header-btn left-btn">
+    <div class="header">
+        <a href='{{ route('moderation') }}' class="header-btn left-btn">
             <img src="{{ asset('icons/white/back-white.png') }}">
         </a>
 
@@ -13,6 +13,8 @@
             Moderate Art #{{ $art->id }} by 
             <a href="/profile/{{ $art->user_id }}" style="color: whitesmoke">{{ $art->user->name }}</a>
         </h1>
+        
+        <a class="header-btn right-btn" style="cursor:default"></a>
     </div>
 
     <style>

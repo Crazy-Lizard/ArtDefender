@@ -9,9 +9,35 @@
             <img src="{{ asset('icons/white/back-white.png') }}">
         </a> --}}
         @auth
-            <a href="/profile/{{ auth()->user()->id }}" class="header-btn left-btn" onclick="event.preventDefault(); window.history.back();">
+            <a href="/profile/{{ auth()->user()->id }}" class="header-btn left-btn">
                 <img src="{{ asset('icons/white/back-white.png') }}">
             </a>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    let backButton = document.querySelector('.header-btn.left-btn');
+                    if (backButton) {
+                        backButton.addEventListener('click', function(event) {
+                            event.preventDefault();
+                            let preReportReferrer = sessionStorage.getItem('preReportReferrer');
+                            let previousPage = document.referrer;
+
+                            if (previousPage.includes('/report')) {
+                                if (preReportReferrer) {
+                                    window.location.href = preReportReferrer;
+                                } else {
+                                    window.location.href = '/map'; // Изменено на переход к карте
+                                }
+                                sessionStorage.removeItem('preReportReferrer');
+                            } else if (previousPage.includes('/moderation')) {
+                                window.location.href = '/map';
+                            } else {
+                                window.history.back();
+                            }
+                        });
+                    }
+                });
+            </script>
         @endauth
         @guest
             <a class="header-btn left-btn" onclick="event.preventDefault(); window.history.back();">
@@ -40,9 +66,8 @@
                     @csrf
                     @method('DELETE')
                 </form>
-
             @else
-                <a {{--href="{{ route('report.create') }}"--}} class="header-btn right-btn">
+                <a href="{{ route('reports.create', $art) }}" class="header-btn right-btn">
                     <img src="{{ asset('icons/red/report-red.png') }}">
                 </a>
             @endif
@@ -72,7 +97,7 @@
     
     <div class="container">
         <div>
-            <div class="card">
+            <div class="card" style="cursor: default">
                 @if ($art->image_url)
                     <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
                 @endif
@@ -88,5 +113,13 @@
             </div>
         </div>
     </div>
+
+    <!-- Кнопка для открытия в Яндекс Картах -->
+    {{-- <a href="https://yandex.ru/maps/?pt={{ $art->lng }},{{ $art->lat }}&z=17&l=map" 
+        target="_blank" 
+        class="moder-btn reject-btn">
+        Открыть в Яндекс.Картах
+    </a> --}}
+</div>
 
 @endsection

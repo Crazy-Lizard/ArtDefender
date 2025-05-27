@@ -88,8 +88,9 @@ body {
     transition: background-color 0.3s ease, box-shadow 0.1s ease;
     cursor: pointer;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    padding: 20px;
     gap: 2px;
 }
 .moder-btn img {

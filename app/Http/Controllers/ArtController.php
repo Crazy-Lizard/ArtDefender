@@ -55,46 +55,15 @@ class ArtController extends Controller
             'art_type' => $validated['art_type'],
             'art_status' => $validated['art_status'],
             'art_created_year' => $validated['art_created_year'],
-            'request_status' => 'waiting', // Статус по умолчанию
+            'request_status' => 'pending', // Статус по умолчанию
         ]);
 
         return redirect()->route('map')->with('success', 'Art submitted successfully!');
     }
 
-    public function showRequests() {
-        if (!auth()->user()->isModerator()) {
-            return redirect()->route('map');
-        }
-        $arts = Art::where('request_status', 'waiting')->get();
-        return view('requests', ['arts' => $arts]);
-    }
-
-    public function artModerate(Art $art) {
-        if (!auth()->user()->isModerator()) {
-            return redirect()->route('map');
-        }
-        return view('arts.moderate', ['art' => $art]);
-    }
-
-    public function artApprove(Art $art) {
-        if (!auth()->user()->isModerator()) {
-            return redirect()->route('map');
-        }
-        $art->update(['request_status' => 'approved']);
-        return redirect()->route('requests')->with('success', 'Art approved');
-    }
-
-    public function artReject(Art $art) {
-        if (!auth()->user()->isModerator()) {
-            return redirect()->route('map');
-        }
-        $art->update(['request_status' => 'rejected']);
-        return redirect()->route('requests')->with('success', 'Art rejected');
-    }
-
     public function destroy(Art $art)
     {
-        if (($art->user_id !== auth()->id()) || (!auth()->user()->isModerator())) {
+        if (($art->user_id !== auth()->id()) && (!auth()->user()->isModerator())) {
             abort(403, 'Недостаточно прав');
         }
 

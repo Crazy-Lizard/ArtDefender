@@ -9,6 +9,27 @@
             <img src="{{ asset('icons/white/back-white.png') }}">
         </a>
 
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                let backButton = document.querySelector('.header-btn.left-btn');
+                if (backButton) {
+                    backButton.addEventListener('click', function(event) {
+                        event.preventDefault();
+
+                        let previousPage = document.referrer;
+
+                        if (previousPage.includes('/arts/')) {
+                            window.history.back();
+                        } else if (previousPage.includes('/moderation')) {
+                            window.location.href = '/map';
+                        } else {
+                            window.history.back();
+                        }
+                    });
+                }
+            });
+        </script>
+
         <h1> 
             {{ $user->name }}
         </h1>
@@ -83,10 +104,10 @@
             @if (auth()->user()->id == $user->id)
                 <!-- Waiting Arts -->
                 <div class="status-block waiting">
-                    <h3>Pending Arts ({{ $waitingArts->count() }})</h3>
-                    @if($waitingArts->isNotEmpty())
+                    <h3>Pending Arts ({{ $pendingArts->count() }})</h3>
+                    @if($pendingArts->isNotEmpty())
                         <div class="arts-grid">
-                            @foreach($waitingArts as $art)
+                            @foreach($pendingArts as $art)
                                 <div class="card">
                                     <a href="{{ route('art.show', $art->id) }}">
                                         <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
@@ -123,7 +144,7 @@
     @auth
         @if(auth()->user()->isModerator())
             <div class="buttons">
-                <button class="moderator-btn main-btn" onclick="window.location.href='{{ route('requests') }}'">Moderation board</button>
+                <button class="moderator-btn main-btn" onclick="window.location.href='{{ route('moderation') }}'">Moderation board</button>
             </div>
         @endif
     @endauth

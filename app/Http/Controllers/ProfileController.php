@@ -19,8 +19,8 @@ class ProfileController extends Controller
             ->where('request_status', 'approved')
             ->get();
 
-        $waitingArts = $user->arts()
-            ->where('request_status', 'waiting')
+        $pendingArts = $user->arts()
+            ->where('request_status', 'pending')
             ->get();
 
         $rejectedArts = $user->arts()
@@ -30,7 +30,7 @@ class ProfileController extends Controller
         return view('profile', compact(
             'user',
             'approvedArts',
-            'waitingArts',
+            'pendingArts',
             'rejectedArts'
         ));
     }

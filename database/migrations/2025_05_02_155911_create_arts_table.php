@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('creator')->nullable()->default('UNKNOWN'); 
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); 
             $table->enum('art_status', ['LIVE', 'BUFFED', 'UNKNOWN'])->default('UNKNOWN'); 
-            $table->enum('request_status', ['approved', 'rejected', 'waiting'])->default('waiting'); 
+            $table->enum('request_status', ['approved', 'rejected', 'pending'])->default('pending'); 
             $table->enum('art_type', ['street-art', 'mural', 'tag', 'sticker']);
             $table->integer('art_created_year')->nullable();
             $table->timestamps();
