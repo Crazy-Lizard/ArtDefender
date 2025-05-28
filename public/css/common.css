@@ -68,6 +68,7 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-self: center;
     gap: 10px;
 }
 .moder-btns-mini {
@@ -153,6 +154,15 @@ body {
         #f2603e 50.78%,
         #b92136 84.58%
     );
+}
+
+.edit-btn {
+    border: none;
+    border-radius: 15px;
+    height: 30px;
+    width: 30px;
+    color: whitesmoke;
+    cursor: pointer;
 }
 
 .header {

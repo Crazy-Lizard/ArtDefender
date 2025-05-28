@@ -32,6 +32,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::delete('/arts/{art}', [ArtController::class, 'destroy'])->name('arts.delete');
 
+    Route::patch('/arts/{art}/update-field', [ArtController::class, 'updateField'])->name('arts.update-field');
+
     Route::get('/moderation', [ModeratorController::class, 'ModerationPanel'])->name('moderation');
 
     Route::get('/arts/{art}/moderate', [ModeratorController::class, 'artModerate'])->name('arts.moderate');

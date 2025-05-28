@@ -13,13 +13,17 @@ class ArtController extends Controller
     public function show(Art $art) {
         $currentUrl = url()->current();
         $previousUrl = url()->previous();
+        $editable = auth()->check() && (auth()->id() === $art->user_id || auth()->user()->isModerator());
 
         // Store the previous URL if it's different from the current art URL
         if ($previousUrl !== $currentUrl) {
             session()->put('art_show_referrer', $previousUrl);
         }
 
-        return view('arts.art-screen', ['art' => $art]);
+        return view('arts.art-screen', [
+            'art' => $art,
+            'editable' => $editable
+        ]);
     }
 
     public function create(Request $request)
@@ -72,5 +76,27 @@ class ArtController extends Controller
         $redirectUrl = session()->pull('art_show_referrer', route('map'));
 
         return redirect()->to($redirectUrl);
+    }
+    
+    public function updateField(Request $request, Art $art)
+    {
+        $validated = $request->validate([
+            'field' => 'required|in:description,art_status,art_type,art_created_year,creator',
+            'value' => 'nullable|string|max:255'
+        ]);
+        
+        $field = $validated['field'];
+        $art->$field = $validated['value'] ?: null;
+        $art->save();
+        
+        // Обновляем модель, чтобы получить актуальные данные
+        $art->refresh();
+
+        return response()->json([
+            'success' => true,
+            'newValue' => $art->$field,
+            'art' => $art->only(['id', 'user_id']),
+            'message' => 'Field updated successfully'
+        ]);
     }
 }
