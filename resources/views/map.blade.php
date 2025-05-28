@@ -31,8 +31,9 @@
     </div>
 
     @auth
-        <a class="bottom-interface" id="startBtn"><img src="{{ asset('icons/black/plus-black.png') }}"></a>
+        <a id="startBtn" class="bottom-interface"><img src="{{ asset('icons/black/plus-black.png') }}"></a>
 
+        <a id="cancelBtn" class="bottom-interface" style="display: none; right: 100px;"><img src="{{ asset('icons/black/cross-black.png') }}"></a>
         <a id="confirmBtn" class="bottom-interface" style="display: none;"><img src="{{ asset('icons/black/tick-black.png') }}"></a>
     @endauth
 
@@ -127,7 +128,20 @@
         document.getElementById('startBtn').addEventListener('click', () => {
             isPlacing = true;
             document.getElementById('confirmBtn').style.display = 'block';
+            document.getElementById('cancelBtn').style.display = 'block';
             document.getElementById('startBtn').style.display = 'none';
+        });
+        
+        document.getElementById('cancelBtn').addEventListener('click', () => {
+            isPlacing = false;
+            document.getElementById('confirmBtn').style.display = 'none';
+            document.getElementById('cancelBtn').style.display = 'none';
+            document.getElementById('startBtn').style.display = 'block';
+            
+            if(marker) {
+                map.removeLayer(marker);
+                marker = null;
+            }
         });
 
         // Обработка клика по карте
