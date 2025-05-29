@@ -13,16 +13,15 @@ class ArtController extends Controller
     public function show(Art $art) {
         $currentUrl = url()->current();
         $previousUrl = url()->previous();
-        $editable = auth()->check() && (auth()->id() === $art->user_id || auth()->user()->isModerator());
 
-        // Store the previous URL if it's different from the current art URL
-        if ($previousUrl !== $currentUrl) {
-            session()->put('art_show_referrer', $previousUrl);
+        // Всегда сохраняем реферер для страницы арта
+        if ($previousUrl && $previousUrl !== $currentUrl) {
+            session(['art_show_referrer' => $previousUrl]);
         }
 
         return view('arts.art-screen', [
             'art' => $art,
-            'editable' => $editable
+            'editable' => auth()->check() && (auth()->id() === $art->user_id || auth()->user()->isModerator())
         ]);
     }
 
@@ -70,12 +69,17 @@ class ArtController extends Controller
         if (($art->user_id !== auth()->id()) && (!auth()->user()->isModerator())) {
             abort(403, 'Недостаточно прав');
         }
-
+    
         $art->delete();
 
+        // Очищаем реферер после использования
         $redirectUrl = session()->pull('art_show_referrer', route('map'));
-
+        
+        // Очищаем флаг "из арта" при удалении
+        session()->forget('from_art');
+        
         return redirect()->to($redirectUrl);
+
     }
     
     public function updateField(Request $request, Art $art)

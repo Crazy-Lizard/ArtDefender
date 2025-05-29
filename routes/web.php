@@ -18,7 +18,7 @@ Route::fallback(function () {
 
 Route::get('/map', [MapController::class, 'index'])->name('map');
 
-Route::get('/profile/{id}', [ProfileController::class, 'index']);
+Route::get('/profile/{id}', [ProfileController::class, 'index'])->middleware('web');
 
 Auth::routes();
 

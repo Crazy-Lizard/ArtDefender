@@ -14,6 +14,18 @@ class ProfileController extends Controller
     //
     public function index($id) {
         $user = User::findOrFail($id);
+
+        $previousUrl = url()->previous();
+        if (str_contains($previousUrl, '/arts/')) {
+            session(['from_art' => true]);
+        } else {
+            session()->forget('from_art');
+        }
+
+        // Для прямых заходов устанавливаем реферер по умолчанию
+        if (!session()->has('profile_referrer')) {
+            session(['profile_referrer' => route('map')]);
+        }
         
         $approvedArts = $user->arts()
             ->where('request_status', 'approved')

@@ -15,15 +15,16 @@
                 if (backButton) {
                     backButton.addEventListener('click', function(event) {
                         event.preventDefault();
-
-                        let previousPage = document.referrer;
-
-                        if (previousPage.includes('/arts/')) {
+                        
+                        // Проверяем специальный флаг для переходов со страницы арта
+                        const fromArt = "{{ session('from_art', false) }}";
+                        if (fromArt === '1') {
+                            // Возвращаемся по истории браузера
                             window.history.back();
-                        } else if (previousPage.includes('/moderation')) {
-                            window.location.href = '/map';
                         } else {
-                            window.history.back();
+                            // Используем сохраненный реферер
+                            let backUrl = "{{ session('profile_referrer', route('map')) }}";
+                            window.location.href = backUrl;
                         }
                     });
                 }
