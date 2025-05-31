@@ -6,6 +6,7 @@ use App\Http\Controllers\MapController;
 use App\Http\Controllers\ArtController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ModeratorController;
+use App\Http\Controllers\CommentController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,6 +20,8 @@ Route::fallback(function () {
 Route::get('/map', [MapController::class, 'index'])->name('map');
 
 Route::get('/profile/{id}', [ProfileController::class, 'index'])->middleware('web');
+
+Route::get('/comments/{art_id}', [CommentController::class, 'index'])->name('comments.index');
 
 Auth::routes();
 
@@ -43,12 +46,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/arts/{art}/report', [ModeratorController::class, 'artReportCreate'])->name('reports.create');
     Route::post('/arts/{art}/report', [ModeratorController::class, 'artReportStore'])->name('reports.store');
     
-    // Route::get('/reports', [ModeratorController::class, 'index'])->name('reports');
-    // Route::patch('/reports/{report}', [ModeratorController::class, 'updateStatus'])->name('reports.update');
-
     Route::delete('/reports/{report}/delete-art', [ModeratorController::class, 'resolveByDeletingArt'])->name('reports.resolve.delete-art');
-
     Route::patch('/reports/{report}/reject', [ModeratorController::class, 'resolveByRejectingReport'])->name('reports.resolve.reject');
+
+    Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+    Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+    Route::post('/comments/{id}/restore', [CommentController::class, 'restore'])->name('comments.restore');
 });
 
 Route::get('/arts/{art}', [ArtController::class, 'show'])->name('art.show');

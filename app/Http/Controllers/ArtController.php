@@ -5,23 +5,34 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Log;
+
 use App\Models\Art;
+use App\Models\Comment;
 
 class ArtController extends Controller
 {
     //
     public function show(Art $art) {
+        $art->load('user');
         $currentUrl = url()->current();
         $previousUrl = url()->previous();
 
-        // Всегда сохраняем реферер для страницы арта
         if ($previousUrl && $previousUrl !== $currentUrl) {
             session(['art_show_referrer' => $previousUrl]);
         }
 
+        // Загрузка комментариев для арта
+        $comments = Comment::with(['user', 'replies.user'])
+            ->where('art_id', $art->id)
+            ->whereNull('parent_id')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
         return view('arts.art-screen', [
             'art' => $art,
-            'editable' => auth()->check() && (auth()->id() === $art->user_id || auth()->user()->isModerator())
+            'editable' => auth()->check() && (auth()->id() === $art->user_id || auth()->user()->isModerator()),
+            'comments' => $comments
         ]);
     }
 
