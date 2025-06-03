@@ -191,41 +191,43 @@
             Открыть в Яндекс.Картах
         </a> --}}
     </div>
-    <div class="flex justify-center w-full">
-        <div class="comments-section mt-8 w-full max-w-2xl">
-            <h3 class="text-xl font-bold mb-4 text-center">Комментарии</h3>
+    @if ($art->request_status == 'approved')
+        <div class="flex justify-center w-full">
+            <div class="comments-section mt-8 w-full max-w-2xl">
+                <h3 class="text-xl font-bold mb-4 text-center">Комментарии</h3>
 
-            <!-- Форма добавления комментария - теперь по центру -->
-            @auth
-            <form id="add-comment-form" class="mb-6 flex flex-col items-center" action="{{ route('comments.store') }}" method="POST">
-                @csrf
-                <input type="hidden" name="art_id" value="{{ $art->id }}">
-                <textarea 
-                    name="body" 
-                    class="w-full p-2 border rounded mb-2" 
-                    placeholder="Добавьте комментарий..."
-                    required
-                ></textarea>
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Отправить</button>
-            </form>
-            @else
-            <div class="mb-4 text-center">
-                <a href="{{ route('login') }}" class="text-blue-500">Войдите</a>, чтобы оставлять комментарии
-            </div>
-            @endauth
-
-            <!-- Список комментариев - центрированный -->
-            <div id="comments-container" class="flex flex-col items-center">
-                @if($comments->isNotEmpty())
-                    @foreach($comments as $comment)
-                        @include('comments.comment', ['comment' => $comment])
-                    @endforeach
+                <!-- Форма добавления комментария - теперь по центру -->
+                @auth
+                <form id="add-comment-form" class="mb-6 flex flex-col items-center" action="{{ route('comments.store') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="art_id" value="{{ $art->id }}">
+                    <textarea 
+                        name="body" 
+                        class="w-full p-2 border rounded mb-2" 
+                        placeholder="Добавьте комментарий..."
+                        required
+                    ></textarea>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Отправить</button>
+                </form>
                 @else
-                    <p>Комментариев пока нет</p>
-                @endif
+                <div class="mb-4 text-center">
+                    <a href="{{ route('login') }}" class="text-blue-500">Войдите</a>, чтобы оставлять комментарии
+                </div>
+                @endauth
+
+                <!-- Список комментариев - центрированный -->
+                <div id="comments-container" class="flex flex-col items-center">
+                    @if($comments->isNotEmpty())
+                        @foreach($comments as $comment)
+                            @include('comments.comment', ['comment' => $comment])
+                        @endforeach
+                    @else
+                        <p>Комментариев пока нет</p>
+                    @endif
+                </div>
             </div>
         </div>
-    </div>
+    @endif
 
     <style>
         .comments-section {
