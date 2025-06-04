@@ -8,14 +8,15 @@
             <img src="{{ asset('icons/white/back-white.png') }}">
         </a>
 
-        <h1>MODERATION PANEL</h1>
+        {{-- <h1>MODERATION PANEL</h1> --}}
+        <h1>МОДЕРАТОРНАЯ</h1>
 
         <a class="header-btn right-btn" style="cursor:default"></a>
     </div>
 
     <div class="moderation-tabs">
-        <a href="?tab=requests" class="{{ $activeTab === 'requests' ? 'active' : '' }}">Art Submissions</a>
-        <a href="?tab=reports" class="{{ $activeTab === 'reports' ? 'active' : '' }}">Art Reports</a>
+        <a href="?tab=requests" class="{{ $activeTab === 'requests' ? 'active' : '' }}">Арт заявки</a>
+        <a href="?tab=reports" class="{{ $activeTab === 'reports' ? 'active' : '' }}">Арт жалобы</a>
     </div>
 
     <style>
@@ -40,7 +41,7 @@
         <div class="submissions-list">
             <div>
                 @if ($arts->isEmpty())
-                    <div class="alert alert-info">No arts awaiting moderation.</div>
+                    <div class="alert alert-info">Нет артов, ожидающих модерации.</div>
                 @else
                     <div class="row">
                         @foreach ($arts as $art)

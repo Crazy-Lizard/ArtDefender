@@ -13,12 +13,13 @@
     <div class="content">
         <form class="ad-form" method="POST" action="{{--/register/confirm--}}{{ route('register') }}" enctype="multipart/form-data"  style="--i: 0">
             @csrf
-            <h3>REGISTRATION</h3>
+            {{-- <h3>REGISTRATION</h3> --}}
+            <h3>РЕГИСТРАЦИЯ</h3>
 
             <div class="inputs-block">
 
                 <div class="input-block">
-                    <label for="name">Login</label><br/>
+                    <label for="name">Имя</label><br/>
                     <input type="name" name="name" value="{{ old('name') }}" placeholder="" required>
                     
                     @error('name')
@@ -28,7 +29,7 @@
                 </div>
 
                 <div class="input-block">
-                    <label for="email">Email</label><br/>
+                    <label for="email">Почта</label><br/>
                     <input type="email" name="email" value="{{ old('email') }}" placeholder="" required>
                     
                     @error('email')
@@ -38,7 +39,7 @@
                 </div>
 
                 <div class="input-block">
-                    <label for="password">Password</label><br/>
+                    <label for="password">Пароль</label><br/>
                     <input type="password" name="password" value="{{ old('password') }}" placeholder="" required>
                     
                     @error('password')
@@ -48,7 +49,7 @@
                 </div>
 
                 <div class="input-block">
-                    <label for="password_confirmation">Confirm Password</label><br/>
+                    <label for="password_confirmation">Подтверждение пароля</label><br/>
                     <input type="password" name="password_confirmation" value="{{ old('password') }}" placeholder="" required>
                     
                     @error('password_confirmation')
@@ -60,7 +61,7 @@
             </div>
 
             <div class="buttons">
-                <button type="submit" class="form-btn main-btn">Register</button>
+                <button type="submit" class="form-btn main-btn">Регистрация</button>
             </div>
         </form>
     </div>

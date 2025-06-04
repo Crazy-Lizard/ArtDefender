@@ -111,7 +111,7 @@
                 <!-- Поле описания -->
                 <div class="editable-field mb-2" data-field="description" data-art-id="{{ $art->id }}">
                     <p class="field-value card-text" data-value="{{ $art->description }}">
-                        {{ $art->description ?: 'NON DESCRIPTION' }}
+                        {{ $art->description ?: 'НЕТ ОПИСАНИЯ' }}
                     </p>
                     @if($editable)
                         <button class="main-btn edit-btn">
@@ -123,10 +123,10 @@
                 <ul class="list-group list-group-flush">
                     <!-- Поле автора -->
                     <li class="list-group-item">
-                        Artist: 
+                        Автор: 
                         <div class="editable-field mb-2" data-field="creator" data-art-id="{{ $art->id }}">
                             <span class="field-value card-title" data-value="{{ $art->creator }}">
-                                {{ $art->creator ?: 'UNKNOWN' }}
+                                {{ $art->creator ?: 'НЕИЗВЕСТЕН' }}
                             </span>
                             @if($editable)
                                 <button class="main-btn edit-btn">
@@ -138,10 +138,10 @@
 
                     <!-- Поле типа -->
                     <li class="list-group-item">
-                        Type: 
+                        Тип: 
                         <div class="editable-field d-inline-block" data-field="art_type" data-art-id="{{ $art->id }}">
                             <span class="field-value" data-value="{{ $art->art_type }}">
-                                {{ $art->art_type ?: 'UNKNOWN' }}
+                                {{ $art->art_type ?: 'НЕИЗВЕСТЕН' }}
                             </span>
                             @if($editable)
                                 <button class="main-btn edit-btn">
@@ -153,10 +153,10 @@
                     
                     <!-- Поле года -->
                     <li class="list-group-item">
-                        Year: 
+                        Год: 
                         <div class="editable-field d-inline-block" data-field="art_created_year" data-art-id="{{ $art->id }}">
                             <span class="field-value" data-value="{{ $art->art_created_year }}">
-                                {{ $art->art_created_year ?: 'UNKNOWN' }}
+                                {{ $art->art_created_year ?: 'НЕИЗВЕСТЕН' }}
                             </span>
                             @if($editable)
                                 <button class="main-btn edit-btn">
@@ -168,10 +168,10 @@
                     
                     <!-- Поле статуса -->
                     <li class="list-group-item">
-                        Status: 
+                        Статус: 
                         <div class="editable-field d-inline-block" data-field="art_status" data-art-id="{{ $art->id }}">
                             <span class="field-value" data-value="{{ $art->art_status }}">
-                                {{ $art->art_status ?: 'UNKNOWN' }}
+                                {{ $art->art_status ?: 'НЕИЗВЕСТЕН' }}
                             </span>
                             @if($editable)
                                 <button class="main-btn edit-btn">
@@ -216,7 +216,7 @@
                 @endauth
 
                 <!-- Список комментариев - центрированный -->
-                <div id="comments-container" class="flex flex-col items-center">
+                <div id="comments-container" class="flex flex-col items-center" style="display:flex; flex-direction: column; min-width: 300px">
                     @if($comments->isNotEmpty())
                         @foreach($comments as $comment)
                             @include('comments.comment', ['comment' => $comment])
@@ -753,13 +753,13 @@
                             return `
                             <div class="comment card mb-3" data-id="${comment.id}">
                                 <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <h5 class="card-title">
+                                    <div class="d-flex justify-content-between" style="display: flex; justify-content: flex-start; align-items:baseline; gap: 10px">
+                                        <h3 class="card-title">
                                             <a href="/profile/${comment.user_id}">${comment.user.name}</a>
-                                        </h5>
-                                        <small class="text-muted">${comment.created_at_diff}</small>
+                                        </h3>
+                                        <small class="text-muted" style="font-weight: normal; font-size: 12px; opacity: 50%">${comment.created_at_diff}</small>
                                     </div>
-                                    <p class="card-text">${comment.body}</p>
+                                    <p class="card-text" style="font-weight: normal; font-size: 14px;">${comment.body}</p>
                                     <div class="comment-actions mt-2">
                                         ${actionButtons}
                                     </div>

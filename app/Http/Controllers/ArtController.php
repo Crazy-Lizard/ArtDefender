@@ -72,7 +72,7 @@ class ArtController extends Controller
             'request_status' => 'pending', // Статус по умолчанию
         ]);
 
-        return redirect()->route('map')->with('success', 'Art submitted successfully!');
+        return redirect()->route('map')->with('success', 'Арт успешно создан!');
     }
 
     public function destroy(Art $art)

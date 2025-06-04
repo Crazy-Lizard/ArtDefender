@@ -19,7 +19,7 @@
 
         <form id="ad-search" action="" method="GET" style="--i: 3">
             <div class="search-bar">
-                <input type="text" name="query" class="search" id="search" placeholder="Search">
+                <input type="text" name="query" class="search" id="search" placeholder="Поиск">
                 <button class="search-btn" type="submit"><img src="icons/black/search-black.png"></button>
             </div>
         </form>

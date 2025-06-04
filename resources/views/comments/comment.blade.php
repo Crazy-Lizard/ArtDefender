@@ -1,26 +1,35 @@
-<div class="comment card mb-3" data-id="{{ $comment->id }}">
+<div class="comment card mb-3" style="" data-id="{{ $comment->id }}">
     <div class="card-body">
-        <div class="d-flex justify-content-between">
-            <h5 class="card-title"><a href="/profile/{{ $comment->user_id }}">{{ $comment->user->name }}</a></h5>
-            <small class="text-muted">{{ $comment->created_at->diffForHumans() }}</small>
+        <div class="d-flex justify-content-between" style="display: flex; justify-content: flex-start; align-items:baseline; gap: 10px">
+            <h3 class="card-title"><a href="/profile/{{ $comment->user_id }}" style="color: whitesmoke">{{ $comment->user->name }}</a></h3>
+            <small class="text-muted" style="font-weight: normal; font-size: 12px; opacity: 50%">{{ $comment->created_at->diffForHumans() }}</small>
         </div>
         
-        <p class="card-text">{{ $comment->body }}</p>
+        <p class="card-text" style="font-weight: normal; font-size: 14px;">{{ $comment->body }}</p>
         
         <!-- Кнопка ответа -->
         <div class="comment-actions mt-2">
                 @auth
                     <button class="btn btn-sm btn-outline-secondary reply-btn" data-comment-id="{{ $comment->id }}">
-                        reply
+                        ответить
                     </button>
+                    {{-- <a class="reply-btn" data-comment-id="{{ $comment->id }}" style="font-weight: normal; font-size: 12px; color: #43E6B1">
+                        ответить
+                    </a> --}}
                     @if($comment->user_id == auth()->id() || auth()->user()->isModerator())
                         <button class="delete-comment text-red-500 text-sm" data-id="{{ $comment->id }}">
-                            delete
+                            удалить
                         </button>
+                        {{-- <a class="delete-comment" data-comment-id="{{ $comment->id }}" style="font-weight: normal; font-size: 12px; color: #F2603E">
+                            удалить
+                        </a> --}}
                     @else
                         <button class="report-comment text-red-500 text-sm" data-id="{{ $comment->id }}">
-                            report
+                            жфлоба
                         </button>
+                        {{-- <a class="report-comment" data-comment-id="{{ $comment->id }}" style="font-weight: normal; font-size: 12px; color: #F2603E">
+                            жалоба
+                        </a> --}}
                     @endif
                 @endauth
             </div>

@@ -84,7 +84,7 @@
     <div class="art-status-blocks slide-space">
         <!-- Approved Arts -->
         <div class="status-block approved">
-            <h3>Approved Arts ({{ $approvedArts->count() }})</h3>
+            <h3>Опубликованные арты: ({{ $approvedArts->count() }})</h3>
             @if($approvedArts->isNotEmpty())
                 <div class="arts-grid">
                     @foreach($approvedArts as $art)
@@ -96,7 +96,7 @@
                     @endforeach
                 </div>
             @else
-                <p class="no-arts">No approved arts</p>
+                <p class="no-arts">Нет опубликованных артов</p>
             @endif
         </div>
 
@@ -105,7 +105,7 @@
             @if (auth()->user()->id == $user->id)
                 <!-- Waiting Arts -->
                 <div class="status-block waiting">
-                    <h3>Pending Arts ({{ $pendingArts->count() }})</h3>
+                    <h3>Модерирующиеся арты: ({{ $pendingArts->count() }})</h3>
                     @if($pendingArts->isNotEmpty())
                         <div class="arts-grid">
                             @foreach($pendingArts as $art)
@@ -117,13 +117,13 @@
                             @endforeach
                         </div>
                     @else
-                        <p class="no-arts">No pending arts</p>
+                        <p class="no-arts">Нет модерирующихся артов</p>
                     @endif
                 </div>
 
                 <!-- Rejected Arts -->
                 <div class="status-block rejected">
-                    <h3>Rejected Arts ({{ $rejectedArts->count() }})</h3>
+                    <h3>Отклонённые арты: ({{ $rejectedArts->count() }})</h3>
                     @if($rejectedArts->isNotEmpty())
                         <div class="arts-grid">
                             @foreach($rejectedArts as $art)
@@ -135,7 +135,7 @@
                             @endforeach
                         </div>
                     @else
-                        <p class="no-arts">No rejected arts</p>
+                        <p class="no-arts">Нет отклонённых артов</p>
                     @endif
                 </div>
             @endif
@@ -145,7 +145,7 @@
     @auth
         @if(auth()->user()->isModerator())
             <div class="buttons">
-                <button class="moderator-btn main-btn" onclick="window.location.href='{{ route('moderation') }}'">Moderation board</button>
+                <button class="moderator-btn main-btn" onclick="window.location.href='{{ route('moderation') }}'">Панель модерации</button>
             </div>
         @endif
     @endauth

@@ -10,7 +10,7 @@
         </a>
 
         <h1>
-            Moderate Art #{{ $art->id }} by 
+            Art #{{ $art->id }} by 
             <a href="/profile/{{ $art->user_id }}" style="color: whitesmoke">{{ $art->user->name }}</a>
         </h1>
         
@@ -70,7 +70,7 @@
                 <!-- Поле описания -->
                 <div class="editable-field mb-2" data-field="description" data-art-id="{{ $art->id }}">
                     <p class="field-value card-text" data-value="{{ $art->description }}">
-                        {{ $art->description ?: 'NON DESCRIPTION' }}
+                        {{ $art->description ?: 'НЕТ ОПИСАНИЯ' }}
                     </p>
                     @if($editable)
                         <button class="main-btn edit-btn">
@@ -82,10 +82,10 @@
                 <ul class="list-group list-group-flush">
                     <!-- Поле автора -->
                     <li class="list-group-item">
-                        Artist: 
+                        Автор: 
                         <div class="editable-field mb-2" data-field="creator" data-art-id="{{ $art->id }}">
                             <span class="field-value card-title" data-value="{{ $art->creator }}">
-                                {{ $art->creator ?: 'UNKNOWN' }}
+                                {{ $art->creator ?: 'НЕИЗВЕСТЕН' }}
                             </span>
                             @if($editable)
                                 <button class="main-btn edit-btn">
@@ -97,10 +97,10 @@
 
                     <!-- Поле типа -->
                     <li class="list-group-item">
-                        Type: 
+                        Тип: 
                         <div class="editable-field d-inline-block" data-field="art_type" data-art-id="{{ $art->id }}">
                             <span class="field-value" data-value="{{ $art->art_type }}">
-                                {{ $art->art_type ?: 'UNKNOWN' }}
+                                {{ $art->art_type ?: 'НЕИЗВЕСТЕН' }}
                             </span>
                             @if($editable)
                                 <button class="main-btn edit-btn">
@@ -112,10 +112,10 @@
                     
                     <!-- Поле года -->
                     <li class="list-group-item">
-                        Year: 
+                        Год: 
                         <div class="editable-field d-inline-block" data-field="art_created_year" data-art-id="{{ $art->id }}">
                             <span class="field-value" data-value="{{ $art->art_created_year }}">
-                                {{ $art->art_created_year ?: 'UNKNOWN' }}
+                                {{ $art->art_created_year ?: 'НЕИЗВЕСТЕН' }}
                             </span>
                             @if($editable)
                                 <button class="main-btn edit-btn">
@@ -127,10 +127,10 @@
                     
                     <!-- Поле статуса -->
                     <li class="list-group-item">
-                        Status: 
+                        Статус: 
                         <div class="editable-field d-inline-block" data-field="art_status" data-art-id="{{ $art->id }}">
                             <span class="field-value" data-value="{{ $art->art_status }}">
-                                {{ $art->art_status ?: 'UNKNOWN' }}
+                                {{ $art->art_status ?: 'НЕИЗВЕСТЕН' }}
                             </span>
                             @if($editable)
                                 <button class="main-btn edit-btn">
@@ -156,7 +156,7 @@
             @csrf
             @method('PUT')
             <button type="submit" class="moder-btn approve-btn">
-                Approve
+                Одобрить
                 <img src="{{ asset('icons/white/done-white.png') }}">
             </button>
         </form>
@@ -164,7 +164,7 @@
             @csrf
             @method('PUT')
             <button type="submit" class="moder-btn reject-btn">
-                Reject
+                Отклонить
                 <img src="{{ asset('icons/white/cross-white.png') }}">
             </button>
         </form>
@@ -265,7 +265,7 @@
                 }
                 
                 // Сохраняем реальное значение (пустая строка вместо UNKNOWN)
-                const saveValue = value === 'UNKNOWN' ? '' : value;
+                const saveValue = value === 'НЕИЗВЕСТЕН' ? '' : value;
                 updateField(fieldContainer, fieldName, saveValue, currentValue);
             });
             

@@ -13,12 +13,13 @@
     <div class="content">
         <form class="ad-form" method="POST" action="{{--/login/confirm--}}{{ route('login') }}" enctype="multipart/form-data">
             @csrf
-            <h3>AUTH</h3>
+            {{-- <h3>AUTH</h3> --}}
+            <h3>ВХОД</h3>
 
             <div class="inputs-block">
 
                 <div class="input-block">
-                    <label for="email">Email</label><br/>
+                    <label for="email">Почта</label><br/>
                     <input type="email" name="email" value="{{ old('email') }}" placeholder="">
                     
                     @error('email')
@@ -28,7 +29,7 @@
                 </div>
 
                 <div class="input-block">
-                    <label for="password">Password</label><br/>
+                    <label for="password">Пароль</label><br/>
                     <input type="password" name="password" value="{{ old('password') }}" placeholder="">
                     
                     @error('password')
@@ -40,7 +41,7 @@
             </div>
 
             <div class="buttons">
-                <button type="submit" class="form-btn main-btn">Log In</button>
+                <button type="submit" class="form-btn main-btn">Войти</button>
             </div>
         </form>
     </div>

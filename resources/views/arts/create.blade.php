@@ -21,7 +21,7 @@
                 </div>
                 <div class="input-block">
                     <select class="form-control" name="art_status" required>
-                        <option value="">Status of creation</option>
+                        <option value="">Статус работы</option>
                         <option value="LIVE">Live</option>
                         <option value="BUFFED">Buffed</option>
                         <option value="UNKNOWN">Unknown</option>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="input-block">
                     <select class="form-control" name="art_type" required>
-                        <option value="">Type of creation</option>
+                        <option value="">Тип работы</option>
                         <option value="street-art">Street Art</option>
                         <option value="mural">Mural</option>
                         <option value="tag">Tag</option>
@@ -68,7 +68,7 @@
             </div>
             
             <div class="button">
-                <button type="submit" class="form-btn main-btn">Создать Art</button>
+                <button type="submit" class="form-btn main-btn">Создать Арт</button>
             </div>
         </form>
     </div>
