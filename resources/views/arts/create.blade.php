@@ -32,14 +32,14 @@
                     @enderror
                 </div>
                 <div class="input-block">
-                    <input type="text" name="creator" placeholder="Artist of creation">
+                    <input type="text" name="creator" placeholder="Автор работы">
                     
                     @error('creator')
                         <p class="error-text">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="input-block">
-                    <input type="number" class="form-control" name="art_created_year" min="1900" max="{{ date('Y') }}" placeholder="Year of creation">
+                    <input type="number" class="form-control" name="art_created_year" min="1900" max="{{ date('Y') }}" placeholder="Год создания">
                     
                     @error('art_created_year')
                         <p class="error-text">{{ $message }}</p>
@@ -59,7 +59,7 @@
                     @enderror
                 </div>
                 <div class="input-block">
-                    <textarea class="form-control" name="description" rows="3" placeholder="Add description"></textarea>
+                    <textarea class="form-control" name="description" rows="3" placeholder="Добавьте описание"></textarea>
                     
                     @error('description')
                         <p class="error-text">{{ $message }}</p>
