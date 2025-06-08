@@ -89,7 +89,6 @@
             height: auto;
             border-radius: 20px;
             overflow: hidden;
-            cursor: pointer;
         }
         .image {
             max-width: 372px;
@@ -102,7 +101,7 @@
 
     <div class="container" style="display: flex; justify-content: center">
         <div>
-            <div class="card" style="cursor: default">
+            <div class="card">
                 @if ($art->image_url)
                     <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
                 @endif
@@ -198,21 +197,24 @@
 
                 <!-- Форма добавления комментария - теперь по центру -->
                 @auth
-                <form id="add-comment-form" class="mb-6 flex flex-col items-center" action="{{ route('comments.store') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="art_id" value="{{ $art->id }}">
-                    <textarea 
-                        name="body" 
-                        class="w-full p-2 border rounded mb-2" 
-                        placeholder="Добавьте комментарий..."
-                        required
-                    ></textarea>
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Отправить</button>
-                </form>
+                    <form id="add-comment-form" class="mb-6 flex flex-col items-center" action="{{ route('comments.store') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="art_id" value="{{ $art->id }}">
+                        <textarea 
+                            name="body" 
+                            class="comment-text" 
+                            placeholder="Добавьте комментарий..."
+                            required
+                        ></textarea>
+                        <button type="submit" class="comment-btn">
+                            <img src="{{ asset('icons/black/chat-black.png') }}">
+                            {{-- Отправить --}}
+                        </button>
+                    </form>
                 @else
-                <div class="mb-4 text-center">
-                    <a href="{{ route('login') }}" class="text-blue-500">Войдите</a>, чтобы оставлять комментарии
-                </div>
+                    <div class="mb-4 text-center">
+                        <a href="{{ route('login') }}" class="text-blue-500">Войдите</a>, чтобы оставлять комментарии
+                    </div>
                 @endauth
 
                 <!-- Список комментариев - центрированный -->
@@ -234,14 +236,17 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            margin-bottom: 50px
         }
         
         .comment {
             width: 100%;
-            max-width: 600px;
-            margin-bottom: 1.5rem;
-            padding: 1rem;
+            max-width: 300px;
+            /* margin-bottom: 1rem;
+            padding: 1rem; */
             border-radius: 0.5rem;
+            justify-content: flex-start;
+            word-break: break-word;      
         }
         
         .comment-actions {
@@ -252,289 +257,6 @@
     </style>
 
     <!-- Скрипт для обработки комментариев -->
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Отправка нового комментария
-            const commentForm = document.getElementById('add-comment-form');
-            if (commentForm) {
-                commentForm.addEventListener('submit', async function(e) {
-                    e.preventDefault();
-
-                    const form = this;
-                    const button = form.querySelector('button[type="submit"]');
-                    const originalButtonText = button.textContent;
-                    button.textContent = 'Отправка...';
-                    button.disabled = true;
-                    
-                    const formData = new FormData(this);
-                    const response = await fetch('{{ route("comments.store") }}', {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Accept': 'application/json'
-                        }
-                    });
-
-                    if (response.ok) {
-                        const comment = await response.json();
-                        // Обновляем список комментариев
-                        fetchComments();
-                        this.reset();
-                    } else {
-                        console.error('Ошибка при отправке комментария');
-                    }
-                    
-                    button.textContent = originalButtonText;
-                    button.disabled = false;
-                });
-            }
-
-            // Функция загрузки комментариев
-            async function fetchComments() {
-                const response = await fetch(`/comments/{{ $art->id }}`);
-                const comments = await response.json();
-                
-                let commentsHtml = '';
-                
-                if (comments.length === 0) {
-                    commentsHtml = '<p>Комментариев пока нет</p>';
-                } else {
-                    // Рекурсивная функция для генерации вложенных комментариев
-                    const renderComment = (comment) => {
-                        const isAuthenticated = window.authUser != null;
-                        const isAuthor = isAuthenticated && comment.user_id === window.authUser.id;
-                        const isModerator = isAuthenticated && window.authUser.isModerator;
-                        
-                        // Генерация кнопок действий
-                        let actionButtons = '';
-                        if (isAuthenticated) {
-                            actionButtons += `
-                                <button class="btn btn-sm btn-outline-secondary reply-btn" data-comment-id="${comment.id}">
-                                    reply
-                                </button>`;
-                            
-                            if (isAuthor || isModerator) {
-                                actionButtons += `
-                                    <button class="delete-comment text-red-500 text-sm" data-id="${comment.id}">
-                                        delete
-                                    </button>`;
-                            } else {
-                                actionButtons += `
-                                    <button class="report-comment text-red-500 text-sm" data-id="${comment.id}">
-                                        report
-                                    </button>`;
-                            }
-                        }
-                        
-                        // Генерация формы ответа
-                        let replyForm = '';
-                        if (isAuthenticated) {
-                            replyForm = `
-                                <div class="reply-form mt-3" style="display: none;">
-                                    <form class="reply-comment-form" action="{{ route('comments.store') }}" method="POST" data-parent-id="${comment.id}">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="hidden" name="art_id" value="{{ $art->id }}">
-                                        <input type="hidden" name="parent_id" value="${comment.id}">
-                                        <div class="form-group">
-                                            <textarea name="body" class="form-control" rows="2" placeholder="Ваш ответ..." required></textarea>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary btn-sm">Отправить ответ</button>
-                                        <button type="button" class="btn btn-secondary btn-sm cancel-reply">Отмена</button>
-                                    </form>
-                                </div>`;
-                        }
-                        
-                        // Генерация вложенных комментариев
-                        let repliesHtml = '';
-                        if (comment.replies && comment.replies.length > 0) {
-                            repliesHtml = '<div class="replies mt-3 ml-4">';
-                            comment.replies.forEach(reply => {
-                                repliesHtml += renderComment(reply);
-                            });
-                            repliesHtml += '</div>';
-                        }
-                        
-                        return `
-                        <div class="comment card mb-3" data-id="${comment.id}">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <h5 class="card-title"><a href="/profile/${comment.user_id}">${comment.user.name}</a></h5>
-                                    <small class="text-muted">${comment.created_at_diff}</small>
-                                </div>
-                                <p class="card-text">${comment.body}</p>
-                                <div class="comment-actions mt-2">
-                                    ${actionButtons}
-                                </div>
-                                ${replyForm}
-                                ${repliesHtml}
-                            </div>
-                        </div>`;
-                    };
-                    
-                    comments.forEach(comment => {
-                        commentsHtml += renderComment(comment);
-                    });
-                }
-                
-                document.getElementById('comments-container').innerHTML = commentsHtml;
-                initCommentHandlers(); // Инициализация обработчиков событий
-            }
-
-            let commentHandlersInitialized = false;
-
-            function initCommentHandlers() {
-                // Удаляем старые обработчики, если они были
-                if (commentHandlersInitialized) {
-                    document.getElementById('comments-container').replaceWith(
-                        document.getElementById('comments-container').cloneNode(true)
-                    );
-                }
-                
-                // Обработчик для всего контейнера комментариев
-                document.getElementById('comments-container').addEventListener('click', function(e) {
-                    const target = e.target;
-                    
-                    // Обработка кнопки reply
-                    if (target.classList.contains('reply-btn')) {
-                        const commentId = target.dataset.commentId;
-                        const commentEl = target.closest('.comment');
-                        const replyForm = commentEl.querySelector('.reply-form');
-                        
-                        // Скрываем все формы
-                        document.querySelectorAll('.reply-form').forEach(form => {
-                            form.style.display = 'none';
-                        });
-                        
-                        // Показываем текущую форму
-                        replyForm.style.display = 'block';
-                        e.stopPropagation();
-                    }
-                    
-                    // Обработка кнопки cancel
-                    if (target.classList.contains('cancel-reply')) {
-                        target.closest('.reply-form').style.display = 'none';
-                        e.stopPropagation();
-                    }
-                    
-                    // Обработка кнопки delete
-                    if (target.classList.contains('delete-comment')) {
-                        const commentId = target.dataset.id;
-                        if (confirm('Удалить комментарий?')) {
-                            fetch(`/comments/${commentId}`, {
-                                method: 'DELETE',
-                                headers: {
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                    'Accept': 'application/json'
-                                }
-                            }).then(response => {
-                                if (response.ok) fetchComments();
-                            });
-                        }
-                        e.stopPropagation();
-                    }
-                });
-
-                // Обработчики для форм ответов
-                document.querySelectorAll('.reply-comment-form').forEach(form => {
-                    form.addEventListener('submit', function(e) {
-                        e.preventDefault();
-                        const formData = new FormData(this);
-                        
-                        fetch(this.action, {
-                            method: 'POST',
-                            body: formData,
-                            headers: {
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                'Accept': 'application/json'
-                            }
-                        }).then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                fetchComments();
-                                this.reset();
-                                this.closest('.reply-form').style.display = 'none';
-                            }
-                        });
-                    });
-                });
-                
-                commentHandlersInitialized = true;
-            }
-
-            initCommentHandlers();
-        });
-
-        // Обработка кнопок "Ответить"
-        document.querySelectorAll('.reply-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const commentId = this.getAttribute('data-comment-id');
-                const replyForm = this.nextElementSibling;
-                
-                // Скрываем все другие открытые формы
-                document.querySelectorAll('.reply-form').forEach(form => {
-                    if (form !== replyForm) form.style.display = 'none';
-                });
-                
-                // Переключаем текущую форму
-                replyForm.style.display = replyForm.style.display === 'none' ? 'block' : 'none';
-            });
-        });
-
-        // Обработка отмены ответа
-        document.querySelectorAll('.cancel-reply').forEach(button => {
-            button.addEventListener('click', function() {
-                this.closest('.reply-form').style.display = 'none';
-            });
-        });
-
-        // AJAX отправка ответа на комментарий
-        document.querySelectorAll('.reply-comment-form').forEach(form => {
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const formData = new FormData(this);
-                const parentId = this.getAttribute('data-parent-id');
-                
-                fetch("{{ route('comments.store') }}", {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Находим контейнер для ответов
-                        const parentComment = document.querySelector(`.comment[data-id="${parentId}"]`);
-                        let repliesContainer = parentComment.querySelector('.replies');
-                        
-                        // Если контейнера для ответов еще нет - создаем
-                        if (!repliesContainer) {
-                            repliesContainer = document.createElement('div');
-                            repliesContainer.className = 'replies mt-3 ml-4';
-                            parentComment.querySelector('.card-body').appendChild(repliesContainer);
-                        }
-                        
-                        // Добавляем новый ответ
-                        repliesContainer.insertAdjacentHTML('beforeend', data.html);
-                        
-                        // Скрываем форму
-                        this.closest('.reply-form').style.display = 'none';
-                        this.reset();
-                    } else {
-                        alert('Ошибка: ' + (data.message || 'Неизвестная ошибка'));
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Произошла ошибка при отправке ответа');
-                });
-            });
-        });
-    </script> --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Глобальные переменные для управления состоянием
@@ -695,22 +417,22 @@
                             if (isAuthenticated) {
                                 actionButtons += `
                                     <button class="btn btn-sm btn-outline-secondary reply-btn" 
-                                        data-comment-id="${comment.id}">
-                                        Ответить
+                                        data-comment-id="${comment.id}" style="cursor:pointer; border: none; background: none; color:#43E6B1">
+                                        ответить
                                     </button>`;
                                 
                                 if (isAuthor || isModerator) {
                                     actionButtons += `
                                         <button class="delete-comment text-red-500 text-sm" 
-                                            data-id="${comment.id}">
-                                            Удалить
+                                            data-id="${comment.id}" style="cursor:pointer; border: none; background: none; color:#F2603E">
+                                            удалить
                                         </button>`;
-                                } else {
-                                    actionButtons += `
-                                        <button class="report-comment text-red-500 text-sm" 
-                                            data-id="${comment.id}">
-                                            Пожаловаться
-                                        </button>`;
+                                // } else {
+                                //     actionButtons += `
+                                //         <button class="report-comment text-red-500 text-sm" 
+                                //             data-id="${comment.id}">
+                                //             жалоба
+                                //         </button>`;
                                 }
                             }
                             
@@ -727,15 +449,11 @@
                                             <input type="hidden" name="art_id" value="{{ $art->id }}">
                                             <input type="hidden" name="parent_id" value="${comment.id}">
                                             <div class="form-group">
-                                                <textarea name="body" class="form-control" rows="2" 
+                                                <textarea name="body" class="reply-text" rows="2" 
                                                     placeholder="Ваш ответ..." required></textarea>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary btn-sm">
-                                                Отправить
-                                            </button>
-                                            <button type="button" class="btn btn-secondary btn-sm cancel-reply">
-                                                Отмена
-                                            </button>
+                                            </div>                                            
+                                            <button type="submit" class="btn btn-primary btn-sm" style="cursor:pointer; border: none; background: none; color:#43E6B1">отправить</button>
+                                            <button type="button" class="btn btn-secondary btn-sm cancel-reply" style="cursor:pointer; border: none; background: none; color:#F2603E">отмена</button>
                                         </form>
                                     </div>`;
                             }
@@ -743,7 +461,7 @@
                             // Рекурсивная обработка ответов
                             let repliesHtml = '';
                             if (comment.replies && comment.replies.length > 0) {
-                                repliesHtml = '<div class="replies mt-3 ml-4">';
+                                repliesHtml = '<div class="replies" style="padding-left: 30px; margin-bottom:10px>';
                                 comment.replies.forEach(reply => {
                                     repliesHtml += renderComment(reply);
                                 });
@@ -751,11 +469,11 @@
                             }
                             
                             return `
-                            <div class="comment card mb-3" data-id="${comment.id}">
+                            <div class="comment card mb-3"  data-id="${comment.id}">
                                 <div class="card-body">
-                                    <div class="d-flex justify-content-between" style="display: flex; justify-content: flex-start; align-items:baseline; gap: 10px">
+                                    <div class="d-flex justify-content-between" style="display: flex; justify-content: flex-start; align-items:baseline; gap: 10px; height: 30px">
                                         <h3 class="card-title">
-                                            <a href="/profile/${comment.user_id}">${comment.user.name}</a>
+                                            <a href="/profile/${comment.user_id}" style="color: whitesmoke">${comment.user.name}</a>
                                         </h3>
                                         <small class="text-muted" style="font-weight: normal; font-size: 12px; opacity: 50%">${comment.created_at_diff}</small>
                                     </div>
@@ -795,9 +513,9 @@
                     e.preventDefault();
                     const form = this;
                     const button = form.querySelector('button[type="submit"]');
-                    const originalButtonText = button.textContent;
+                    // const originalButtonText = button.textContent;
                     
-                    button.textContent = 'Отправка...';
+                    // button.textContent = 'Отправка...';
                     button.disabled = true;
                     
                     try {
@@ -822,7 +540,7 @@
                         console.error('Ошибка:', error);
                         alert('Ошибка при отправке комментария: ' + error.message);
                     } finally {
-                        button.textContent = originalButtonText;
+                        // button.textContent = originalButtonText;
                         button.disabled = false;
                     }
                 });

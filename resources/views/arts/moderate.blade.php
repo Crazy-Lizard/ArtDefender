@@ -26,8 +26,7 @@
             width: 372px;
             height: auto;
             border-radius: 20px;
-            overflow: hidden;
-            cursor: pointer;
+            overflow: hidden
         }
         .image {
             max-width: 372px;

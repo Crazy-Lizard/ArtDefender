@@ -53,7 +53,7 @@
     </div>
     
     <style>
-        .card {
+        /* .card {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -64,9 +64,47 @@
             cursor: pointer;
         }
         .image {
-            /* max-width: 124px; */
             max-height: 128px;
             object-fit: cover;
+        } */
+        /* Удалите старые стили .card и .image */
+        .arts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 колонки */
+            gap: 2px; /* Расстояние между элементами */
+            width: 100%;
+        }
+
+        .card {
+            width: 124px;
+            height: 124px;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .image-wrapper {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 124px;
+            min-height: 124px;
+        }
+
+        /* Для вертикальных изображений (высота > ширины) */
+        .image-portrait {
+            width: 125px;
+            height: auto;
+            min-height: 125px;
+        }
+
+        /* Для горизонтальных изображений (ширина > высоты) */
+        .image-landscape {
+            height: 125px;
+            width: auto;
+            min-width: 125px;
         }
     </style>
 
@@ -90,7 +128,20 @@
                     @foreach($approvedArts as $art)
                         <div class="card">
                             <a href="{{ route('art.show', $art->id) }}">
-                                <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
+                                <div class="image-wrapper">
+                                    @php
+                                        // Определяем ориентацию изображения
+                                        list($width, $height) = getimagesize(public_path(parse_url($art->image_url, PHP_URL_PATH)));
+                                        $orientation = ($width > $height) ? 'landscape' : 'portrait';
+                                    @endphp
+                                    <img 
+                                        src="{{ $art->image_url }}" 
+                                        class="image-{{ $orientation }}" 
+                                        alt="Art image"
+                                        onerror="this.onerror=null; this.classList.add('image-error')"
+                                    >
+                                </div>
+                                {{-- <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image"> --}}
                             </a>
                         </div>
                     @endforeach
@@ -111,7 +162,20 @@
                             @foreach($pendingArts as $art)
                                 <div class="card">
                                     <a href="{{ route('art.show', $art->id) }}">
-                                        <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
+                                        <div class="image-wrapper">
+                                            @php
+                                                // Определяем ориентацию изображения
+                                                list($width, $height) = getimagesize(public_path(parse_url($art->image_url, PHP_URL_PATH)));
+                                                $orientation = ($width > $height) ? 'landscape' : 'portrait';
+                                            @endphp
+                                            <img 
+                                                src="{{ $art->image_url }}" 
+                                                class="image-{{ $orientation }}" 
+                                                alt="Art image"
+                                                onerror="this.onerror=null; this.classList.add('image-error')"
+                                            >
+                                        </div>
+                                        {{-- <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image"> --}}
                                     </a>
                                 </div>
                             @endforeach
@@ -129,7 +193,20 @@
                             @foreach($rejectedArts as $art)
                                 <div class="card">
                                     <a href="{{ route('art.show', $art->id) }}">
-                                        <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
+                                        <div class="image-wrapper">
+                                            @php
+                                                // Определяем ориентацию изображения
+                                                list($width, $height) = getimagesize(public_path(parse_url($art->image_url, PHP_URL_PATH)));
+                                                $orientation = ($width > $height) ? 'landscape' : 'portrait';
+                                            @endphp
+                                            <img 
+                                                src="{{ $art->image_url }}" 
+                                                class="image-{{ $orientation }}" 
+                                                alt="Art image"
+                                                onerror="this.onerror=null; this.classList.add('image-error')"
+                                            >
+                                        </div>
+                                        {{-- <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image"> --}}
                                     </a>
                                 </div>
                             @endforeach

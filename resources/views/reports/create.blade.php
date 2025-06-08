@@ -7,7 +7,7 @@
             @csrf
             <div class="form-group">
                 <label for="reason">Причина жалобы:</label>
-                <textarea name="reason" id="reason" class="form-control" rows="5" required></textarea>
+                <textarea name="reason" id="reason" class="form-control form-text" rows="5" required></textarea>
             </div>
             <button type="submit" class="form-btn main-btn" style="width: 300px">Отправить жалобу</button>
         </form>
