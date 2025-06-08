@@ -128,5 +128,6 @@ return [
         'Auth' => Illuminate\Support\Facades\Auth::class,
     ],
     
-
+    'locale' => 'ru',
+    'fallback_locale' => 'ru',
 ];
