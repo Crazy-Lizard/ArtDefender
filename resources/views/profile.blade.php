@@ -71,8 +71,11 @@
         .arts-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr); /* 3 колонки */
-            gap: 2px; /* Расстояние между элементами */
+            /*gap: 2px;*/ /* Расстояние между элементами */
             width: 100%;
+            background-color: #502683; 
+            border-radius: 20px;
+            box-shadow: inset 0px 0px 10px black;
         }
 
         .card {
@@ -82,6 +85,7 @@
             overflow: hidden;
             cursor: pointer;
             position: relative;
+            margin: 2px;
         }
 
         .image-wrapper {
@@ -97,12 +101,12 @@
         .image-portrait {
             width: 125px;
             height: auto;
-            min-height: 125px;
+            min-height: 128px;
         }
 
         /* Для горизонтальных изображений (ширина > высоты) */
         .image-landscape {
-            height: 125px;
+            height: 128px;
             width: auto;
             min-width: 125px;
         }

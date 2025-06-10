@@ -461,7 +461,7 @@
                             // Рекурсивная обработка ответов
                             let repliesHtml = '';
                             if (comment.replies && comment.replies.length > 0) {
-                                repliesHtml = '<div class="replies" style="padding-left: 30px; margin-bottom:10px>';
+                                repliesHtml = '<div class="replies" style="padding-left: 30px; margin-bottom:10px">';
                                 comment.replies.forEach(reply => {
                                     repliesHtml += renderComment(reply);
                                 });
