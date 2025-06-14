@@ -8,13 +8,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 use App\Models\Art;
+use App\Models\ArtImage;
 use App\Models\Comment;
 
 class ArtController extends Controller
 {
     //
     public function show(Art $art) {
-        $art->load('user');
+        // $art->load('user');
+        $art->load(['user', 'additionalImages']);
         $currentUrl = url()->current();
         $previousUrl = url()->previous();
 
@@ -32,7 +34,8 @@ class ArtController extends Controller
         return view('arts.art-screen', [
             'art' => $art,
             'editable' => auth()->check() && (auth()->id() === $art->user_id || auth()->user()->isModerator()),
-            'comments' => $comments
+            'comments' => $comments,
+            'additionalImages' => $art->additionalImages
         ]);
     }
 
@@ -50,6 +53,7 @@ class ArtController extends Controller
             'lat' => 'required|numeric|between:-90,90',
             'lng' => 'required|numeric|between:-180,180',
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'additional_images.*' => 'image|mimes:jpeg,png,jpg|max:2048',
             'description' => 'nullable|string|max:1000',
             'creator' => 'nullable|string|max:255',
             'art_type' => 'required|in:street-art,mural,tag,sticker',
@@ -59,7 +63,7 @@ class ArtController extends Controller
 
         $imagePath = $request->file('image')->store('arts', 'public');
 
-        Art::create([
+        $art = Art::create([
             'user_id' => auth()->user()->id,
             'lat' => $validated['lat'],
             'lng' => $validated['lng'],
@@ -71,6 +75,16 @@ class ArtController extends Controller
             'art_created_year' => $validated['art_created_year'],
             'request_status' => 'pending', // Статус по умолчанию
         ]);
+
+        if ($request->hasFile('additional_images')) {
+            foreach ($request->file('additional_images') as $additionalImage) {
+                $additionalImagePath = $additionalImage->store('arts/additional', 'public');
+                ArtImage::create([
+                    'art_id' => $art->id,
+                    'image_path' => $additionalImagePath,
+                ]);
+            }
+        }
 
         return redirect()->route('map')->with('success', 'Арт успешно создан!');
     }
@@ -90,7 +104,6 @@ class ArtController extends Controller
         session()->forget('from_art');
         
         return redirect()->to($redirectUrl);
-
     }
     
     public function updateField(Request $request, Art $art)

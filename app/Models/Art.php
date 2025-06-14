@@ -21,6 +21,11 @@ class Art extends Model
         return $this->belongsTo(Point::class, ['lat', 'lng']);
     }
 
+    public function additionalImages()
+    {
+        return $this->hasMany(ArtImage::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -106,6 +106,13 @@
                     <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
                 @endif
             </div>
+            @if($additionalImages->isNotEmpty())
+                <div class="additional-images-gallery" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
+                    @foreach($additionalImages as $image)
+                        <img src="{{ asset('storage/' . $image->image_path) }}" alt="Additional Art Image" style="width: 150px; height: auto; object-fit: cover; border-radius: 4px;">
+                    @endforeach
+                </div>
+            @endif
             <div class="card-body">
                 <!-- Поле описания -->
                 <div class="editable-field mb-2" data-field="description" data-art-id="{{ $art->id }}">
@@ -212,8 +219,8 @@
                         </button>
                     </form>
                 @else
-                    <div class="mb-4 text-center">
-                        <a href="{{ route('login') }}" class="text-blue-500">Войдите</a>, чтобы оставлять комментарии
+                    <div class="mb-4 text-center" style="margin-bottom: 10px">
+                        <a href="{{ route('login') }}" class="text-blue-500" style="color:whitesmoke">Войдите</a>, чтобы оставлять комментарии
                     </div>
                 @endauth
 
@@ -253,6 +260,13 @@
             display: flex;
             gap: 1rem;
             margin-top: 0.5rem;
+        }
+
+        #comments-container {
+            padding: 10px 20px;
+            border-radius: 20px;
+            background: #502683;
+            box-shadow: inset 0px 0px 10px black;
         }
     </style>
 

@@ -65,6 +65,13 @@
                     <img src="{{ $art->image_url }}" class="image card-img-top" alt="Art image">
                 @endif
             </div>
+            @if($additionalImages->isNotEmpty())
+                <div class="additional-images-gallery" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
+                    @foreach($additionalImages as $image)
+                        <img src="{{ asset('storage/' . $image->image_path) }}" alt="Additional Art Image" style="width: 150px; height: auto; object-fit: cover; border-radius: 4px;">
+                    @endforeach
+                </div>
+            @endif
             <div class="card-body">
                 <!-- Поле описания -->
                 <div class="editable-field mb-2" data-field="description" data-art-id="{{ $art->id }}">
