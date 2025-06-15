@@ -48,7 +48,7 @@
             font-size: inherit;
         }
         .edit-actions { display: flex; gap: 5px; }
-        .editable-field { display: inline-flex; align-items: center; }
+        .editable-field { display: inline-flex; align-items: center; gap:10px; }
         textarea.edit-input { min-height: 100px; resize: vertical; }
         select.edit-input {
             padding: 8px;

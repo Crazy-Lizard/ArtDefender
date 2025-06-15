@@ -57,12 +57,14 @@ class ModeratorController extends Controller
     public function artModerate(Art $art) {
         if (!auth()->user()->isModerator()) {
             return redirect()->route('map');
-        }        
+        }
+        $art->load(['user', 'additionalImages']);
         $editable = auth()->check() && (auth()->id() === $art->user_id || auth()->user()->isModerator());
 
         return view('arts.moderate', [
             'art' => $art,
-            'editable' => $editable
+            'editable' => $editable,
+            'additionalImages' => $art->additionalImages
         ]);
     }
 
